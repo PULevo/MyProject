@@ -1,9 +1,3 @@
-Hyvä huomio — ja olet täysin oikeassa. Portfolioprojektissa suomenkielisen README:n pitäisi olla yhtä kattava ja ammattimainen, ei lyhyempi versio.
-
-Alla on täysin päivitetty suomenkielinen README.fi.md, joka vastaa englanninkielistä rakennetta ja tasoa.
-
-Voit kopioida tämän suoraan README.fi.md tiedostoon.
-
 # MyProject – Kevyt tehtävienhallinta SaaS pienille tiimeille
 
 Kevyt SaaS-tyylinen web-sovellus, joka on suunniteltu pienille tiimeille (1–10 käyttäjää) projektien ja tehtävien hallintaan.
