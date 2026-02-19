@@ -40,40 +40,18 @@ backend/
 
 ## Prerequisites
 
-Required:
-
 - Python 3.12 or newer
 - Git
-
-Planned:
-
-- PostgreSQL
 
 ---
 
 ## Initial setup
 
-Open terminal:
-
-```
-cd backend
-```
-
-Create virtual environment:
+From the `backend/` folder:
 
 ```
 python -m venv .venv
-```
-
-Activate virtual environment:
-
-```
 .\.venv\Scripts\activate
-```
-
-Install dependencies:
-
-```
 pip install -r requirements.txt
 ```
 
@@ -81,13 +59,11 @@ pip install -r requirements.txt
 
 ## Running the development server
 
-Start server:
-
 ```
 uvicorn app.main:app --reload
 ```
 
-Open:
+Open Swagger UI:
 
 ```
 http://127.0.0.1:8000/docs
@@ -97,52 +73,37 @@ http://127.0.0.1:8000/docs
 
 ## Available endpoints
 
-Health:
-
 ```
 GET /health
-```
-
-Version:
-
-```
 GET /version
 ```
 
 ---
 
-## Environment variables
+## Configuration (environment variables)
 
-Local file:
+Sensitive configuration is stored in a local `.env` file (not committed).
 
-```
-backend/.env
-```
+Use `.env.example` as a template.
 
-Template:
+Example keys:
 
 ```
-backend/.env.example
-```
-
-Example:
-
-```
-DATABASE_URL=postgresql+psycopg2://postgres:postgres@localhost:5432/myproject
-GIT_SHA=local-dev
+DATABASE_URL=
+GIT_SHA=
 ```
 
 ---
 
 ## Useful commands
 
-Activate venv:
+Activate virtual environment:
 
 ```
 .\.venv\Scripts\activate
 ```
 
-Deactivate venv:
+Deactivate virtual environment:
 
 ```
 deactivate
@@ -154,20 +115,10 @@ Update requirements:
 pip freeze > requirements.txt
 ```
 
-Run server:
+Run development server:
 
 ```
 uvicorn app.main:app --reload
-```
-
----
-
-## Troubleshooting
-
-Allow scripts in PowerShell:
-
-```
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 ---
@@ -176,5 +127,3 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 Backend foundation complete  
 Database integration next
-
----
