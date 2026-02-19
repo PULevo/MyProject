@@ -8,11 +8,13 @@ dist/
 build/
 
 # Virtual environments
-.venv/
-venv/
+**/venv/
+**/.venv/
 
 # Environment variables
 .env
+.env.*
+!.env.example
 
 # VS Code
 .vscode/
