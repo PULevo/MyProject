@@ -1,7 +1,5 @@
 from fastapi import FastAPI
 from datetime import datetime, timezone
-from app.api import auth, organizations, users
-
 
 import os
 import time
