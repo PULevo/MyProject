@@ -4,13 +4,11 @@ Kevyt SaaS-tyylinen web-sovellus, joka on suunniteltu pienille tiimeille (1–10
 
 Projektia kehitetään full stack -portfolioprojektina käyttäen FastAPI:a, PostgreSQL:ää ja React/Next.js:ää. Tavoitteena on toteuttaa tuotantotasoinen backend-arkkitehtuuri, autentikointijärjestelmä, tietokantarakenne ja skaalautuva SaaS-sovellus.
 
-Projektin tarkoitus on toimia sekä portfolioprojektina että mahdollisena pohjana kaupalliselle SaaS-tuotteelle.
-
 ---
 
 # Nykyinen tila
 
-Backend-perusta on alustettu ja toimii.
+Backend-perusta ja autentikointijärjestelmä on toteutettu kokonaan.
 
 Toteutettu:
 
@@ -18,23 +16,25 @@ Toteutettu:
 - Projektirakenne luotu modulaarisella arkkitehtuurilla
 - Virtuaaliympäristö konfiguroitu
 - Kehityspalvelin toimii
-- API root- ja health-endpointit toteutettu
-- Backend käynnistyy ja toimii lokaalisti
+- API root-, health- ja version-endpointit toteutettu
+- PostgreSQL-tietokantaintegraatio SQLAlchemyn kautta
+- Alembic migraatiojärjestelmä konfiguroitu
+- User-malli (sähköposti, salasanatiiviste, nimi, aikaleimat)
+- Käyttäjän rekisteröinti: `POST /users/register`
+- JWT-pohjainen kirjautuminen: `POST /auth/login`
+- Turvallinen salasanan hajautus bcryptillä
 
 Työn alla:
 
-- PostgreSQL-tietokantaintegraatio
-- SQLAlchemy ORM -mallit
-- Alembic migraatiot
-- Käyttäjähallinta
-- Autentikointijärjestelmä
+- Suojatut endpointit (kirjautunut käyttäjä)
+- Organisaatioiden hallinta
+- Projektien hallinta
+- Tehtävien hallinta
 
 Suunnitteilla:
 
-- Organisaatiot
-- Projektit
-- Tehtävät
-- Frontend-käyttöliittymä
+- Frontend (React / Next.js)
+- Pilvijulkaisu
 
 ---
 
@@ -49,7 +49,6 @@ Keskeiset tavoitteet:
 - Turvallinen autentikointi ja käyttöoikeuksien hallinta
 - SaaS-valmis moniorganisaatiorakenne
 - Tuotantokelpoinen ja laajennettava koodipohja
-- Portfoliotasoinen projekti työnhakua varten
 
 ---
 
@@ -57,10 +56,11 @@ Keskeiset tavoitteet:
 
 ## Autentikointi
 
-- Käyttäjän rekisteröinti
-- Käyttäjän kirjautuminen
-- Turvallinen salasanan hash
-- JWT tai sessiopohjainen autentikointi
+- Käyttäjän rekisteröinti ✅
+- Käyttäjän kirjautuminen ✅
+- Turvallinen salasanan hajautus (bcrypt) ✅
+- JWT-pohjainen autentikointi ✅
+- Kirjautuneen käyttäjän endpoint (`GET /users/me`)
 
 ---
 
@@ -69,7 +69,6 @@ Keskeiset tavoitteet:
 - Organisaation luonti
 - Käyttäjien liittäminen organisaatioon
 - Roolipohjainen käyttöoikeus:
-
   - Admin
   - Member
 
@@ -87,11 +86,9 @@ Keskeiset tavoitteet:
 - Tehtävän luonti
 - Tehtävän osoittaminen käyttäjälle
 - Tehtävän tilat:
-
   - TODO
   - DOING
   - DONE
-
 - Valinnainen määräpäivä
 
 ---
@@ -104,8 +101,6 @@ Keskeiset tavoitteet:
 ---
 
 # Tulevat ominaisuudet (versio 2+)
-
-Ei sisälly MVP-versioon:
 
 - Kommentit tehtäviin
 - Tiedostoliitteet
@@ -123,16 +118,24 @@ Ei sisälly MVP-versioon:
 
 Projektirakenne:
 
-
-
 backend/
 app/
 main.py
 core/
+config.py
+security.py
 db/
+base.py
+session.py
 models/
+user.py
 schemas/
+user.py
+crud/
+user.py
 api/
+users.py
+auth.py
 
 
 Arkkitehtuurin periaatteet:
@@ -141,63 +144,63 @@ Arkkitehtuurin periaatteet:
 - Vastuualueiden selkeä erottelu
 - Skaalautuva suunnittelu
 - Migraatiopohjainen tietokannan hallinta
-- Tuotantotasoinen backend-rakenne
 
 ---
 
-# Tietokantarakenne (suunniteltu)
+# Tietokantarakenne
 
-Keskeiset taulut:
+Toteutettu:
 
-- users
-- organizations
-- memberships
-- projects
-- tasks
+- `users` — sähköposti, salasanatiiviste, nimi, luontiaika
 
-Mahdollistaa:
+Suunnitteilla:
 
-- Moniorganisaatio SaaS-mallin
-- Roolipohjaisen käyttöoikeuden hallinnan
-- Tehtävien osoittamisen ja seurannan
-- Skaalautuvan tietorakenteen
+- `organizations`
+- `memberships` (user ↔ org + rooli)
+- `projects`
+- `tasks`
 
 ---
 
-# API-endpointit (suunniteltu)
+# API-endpointit
 
 Autentikointi:
 
-POST /auth/register  
-POST /auth/login  
+POST /users/register ✅
+POST /auth/login ✅
+GET /users/me (tulossa)
+
 
 Organisaatiot:
 
-POST /orgs  
-GET /orgs  
+POST /orgs
+GET /orgs
+
 
 Projektit:
 
-POST /projects  
-GET /projects  
+POST /projects
+GET /projects
+
 
 Tehtävät:
 
-POST /tasks  
-GET /tasks  
-PATCH /tasks/{id}  
+POST /tasks
+GET /tasks
+PATCH /tasks/{id}
+
 
 ---
 
 # Kehityssuunnitelma
 
-Vaihe 1 – Backend-perusta ✅  
-Vaihe 2 – Tietokantaintegraatio (käynnissä)  
-Vaihe 3 – Autentikointijärjestelmä  
-Vaihe 4 – Ydintoiminnot (organisaatiot, projektit, tehtävät)  
-Vaihe 5 – Frontend-toteutus  
-Vaihe 6 – Julkaisu pilveen  
-Vaihe 7 – Tuotantovalmius  
+Vaihe 1 – Backend-perusta ✅
+Vaihe 2 – Tietokantaintegraatio ✅
+Vaihe 3 – Autentikointijärjestelmä ✅
+Vaihe 4 – Ydintoiminnot (organisaatiot, projektit, tehtävät)
+Vaihe 5 – Frontend-toteutus
+Vaihe 6 – Julkaisu pilveen
+Vaihe 7 – Tuotantovalmius
 
 ---
 
@@ -210,6 +213,8 @@ Backend:
 - SQLAlchemy
 - PostgreSQL
 - Alembic
+- passlib (bcrypt)
+- python-jose (JWT)
 
 Frontend (suunnitteilla):
 
@@ -218,7 +223,7 @@ Frontend (suunnitteilla):
 
 Infra:
 
-- Docker (suunnitteilla)
+- Docker
 - Render / Fly.io / Railway
 - Vercel
 
@@ -231,7 +236,6 @@ Tämä projekti toimii:
 - Portfolioprojektina
 - Oppimisprojektina
 - Backend-osaamisen demonstraationa
-- Tuotantotason arkkitehtuuriharjoituksena
 - Mahdollisena SaaS-tuotteen pohjana
 
 ---
