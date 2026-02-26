@@ -118,24 +118,26 @@ Key goals:
 
 Structure:
 
+```
 backend/
-app/
-main.py
-core/
-config.py
-security.py
-db/
-base.py
-session.py
-models/
-user.py
-schemas/
-user.py
-crud/
-user.py
-api/
-users.py
-auth.py
+└── app/
+    ├── main.py
+    ├── core/
+    │   ├── config.py
+    │   └── security.py
+    ├── db/
+    │   ├── base.py
+    │   └── session.py
+    ├── models/
+    │   └── user.py
+    ├── schemas/
+    │   └── user.py
+    ├── crud/
+    │   └── user.py
+    └── api/
+        ├── users.py
+        └── auth.py
+```
 
 
 Architecture principles:
@@ -167,7 +169,9 @@ Planned:
 Auth:
 
 POST /users/register ✅
+
 POST /auth/login ✅
+
 GET /users/me (planned)
 
 
@@ -195,11 +199,17 @@ PATCH /tasks/{id}
 # Development Roadmap
 
 Phase 1 – Backend foundation ✅
+
 Phase 2 – Database integration ✅
+
 Phase 3 – Authentication system ✅
+
 Phase 4 – Core business logic (organizations, projects, tasks)
+
 Phase 5 – Frontend implementation
+
 Phase 6 – Cloud deployment
+
 Phase 7 – Production readiness
 
 ---
@@ -243,4 +253,5 @@ This project is being developed as:
 # Author
 
 Developer: Pekka Levo
+
 Status: Active development
