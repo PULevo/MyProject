@@ -156,7 +156,9 @@ def delete_project_task(
     project = get_project(db, task.project_id)
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
-    _require_membership(db, current_user.id, project.organization_id)
+    membership = _require_membership(db, current_user.id, project.organization_id)
+    if task.created_by != current_user.id and membership.role != "admin":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Vain tehtävän luoja tai admin voi poistaa tehtävän")
     delete_task(db, task)
 
 
@@ -169,7 +171,7 @@ def delete_org_project(
     project = get_project(db, project_id)
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
-    _require_membership(db, current_user.id, project.organization_id)
+    _require_admin(db, current_user.id, project.organization_id)
     if get_tasks_by_project(db, project_id):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
