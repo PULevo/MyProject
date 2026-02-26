@@ -22,6 +22,8 @@ This folder contains the backend API for **MyProject**, built using FastAPI.
 
 ## Folder structure
 
+```
+
 backend/
 ├── alembic/
 │ ├── env.py
@@ -48,6 +50,7 @@ backend/
 ├── requirements.txt
 └── README.md
 
+```
 
 ---
 
