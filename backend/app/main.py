@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 import os
 import time
 
-from app.api import auth, users
+from app.api import auth, organizations, users
 
 app = FastAPI(
     title = "MyProject API",
