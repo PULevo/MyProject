@@ -218,5 +218,5 @@ This project is being developed as:
 
 # Author
 
-Developer: Pekka  
+Developer: Pekka Levo
 Status: Active development

@@ -238,5 +238,5 @@ Tämä projekti toimii:
 
 # Kehittäjä
 
-Kehittäjä: Pekka  
+Kehittäjä: Pekka Levo
 Status: Aktiivisessa kehityksessä
