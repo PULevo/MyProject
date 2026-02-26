@@ -58,3 +58,7 @@ def update_task(db: Session, task: Task, task_update: TaskUpdate) -> Task:
 def delete_task(db: Session, task: Task) -> None:
     db.delete(task)
     db.commit()
+
+def delete_project(db: Session, project: Project) -> None:
+    db.delete(project)
+    db.commit()

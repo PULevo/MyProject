@@ -7,6 +7,7 @@ from app.crud.project import (
     create_project,
     create_task,
     delete_task,
+    delete_project,
     get_project,
     get_projects_by_org,
     get_task,
@@ -102,3 +103,22 @@ def delete_project_task(
     project = get_project(db, task.project_id)
     _require_membership(db, current_user.id, project.organization_id)
     delete_task(db, task)
+    
+@router.delete("/projects/{project_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_org_project(
+    project_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    project = get_project(db, project_id)
+    if not project:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
+    _require_membership(db, current_user.id, project.organization_id)
+    if get_tasks_by_project(db, project_id):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Projektilla on tehtäviä — poista tehtävät ensin",
+        )
+    delete_project(db, project)
+
+
