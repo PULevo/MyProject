@@ -18,6 +18,10 @@ class ProjectResponse(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+    
+class ProjectUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
 
 
 class TaskCreate(BaseModel):

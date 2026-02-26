@@ -6,18 +6,21 @@ from app.crud.organization import get_membership
 from app.crud.project import (
     create_project,
     create_task,
-    delete_task,
     delete_project,
+    delete_task,
     get_project,
     get_projects_by_org,
     get_task,
     get_tasks_by_project,
+    update_project,
     update_task,
 )
 
+
 from app.db.session import get_db
 from app.models.user import User
-from app.schemas.project import ProjectCreate, ProjectResponse, TaskCreate, TaskResponse, TaskUpdate
+from app.schemas.project import ProjectCreate, ProjectResponse, ProjectUpdate, TaskCreate, TaskResponse, TaskUpdate
+
 
 router = APIRouter(tags=["projects"])
 
@@ -55,11 +58,26 @@ def get_org_project(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
+    
     project = get_project(db, project_id)
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
     _require_membership(db, current_user.id, project.organization_id)
     return project
+
+@router.patch("/projects/{project_id}", response_model=ProjectResponse)
+def patch_project(
+    project_id: int,
+    project_update: ProjectUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    
+    project = get_project(db, project_id)
+    if not project:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
+    _require_membership(db, current_user.id, project.organization_id)
+    return update_project(db, project, project_update)
 
 
 @router.post("/projects/{project_id}/tasks", response_model=TaskResponse, status_code=status.HTTP_201_CREATED)

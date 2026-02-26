@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 
 from app.models.project import Project, Task
-from app.schemas.project import ProjectCreate, TaskCreate, TaskUpdate
+from app.schemas.project import ProjectCreate, ProjectUpdate, TaskCreate, TaskUpdate
+
 
 
 def create_project(db: Session, project_in: ProjectCreate, org_id: int, user_id: int) -> Project:
@@ -62,3 +63,11 @@ def delete_task(db: Session, task: Task) -> None:
 def delete_project(db: Session, project: Project) -> None:
     db.delete(project)
     db.commit()
+
+def update_project(db: Session, project: Project, project_update: ProjectUpdate) -> Project:
+    update_data = project_update.model_dump(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(project, field, value)
+    db.commit()
+    db.refresh(project)
+    return project
