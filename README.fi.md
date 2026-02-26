@@ -116,26 +116,30 @@ Keskeiset tavoitteet:
 
 # Backend-arkkitehtuuri
 
-Projektirakenne:
+# Backend-arkkitehtuuri
 
+## Projektirakenne
+
+```
 backend/
-app/
-main.py
-core/
-config.py
-security.py
-db/
-base.py
-session.py
-models/
-user.py
-schemas/
-user.py
-crud/
-user.py
-api/
-users.py
-auth.py
+└── app/
+    ├── main.py
+    ├── core/
+    │   ├── config.py
+    │   └── security.py
+    ├── db/
+    │   ├── base.py
+    │   └── session.py
+    ├── models/
+    │   └── user.py
+    ├── schemas/
+    │   └── user.py
+    ├── crud/
+    │   └── user.py
+    └── api/
+        ├── users.py
+        └── auth.py
+```
 
 
 Arkkitehtuurin periaatteet:
@@ -167,26 +171,32 @@ Suunnitteilla:
 Autentikointi:
 
 POST /users/register ✅
+
 POST /auth/login ✅
+
 GET /users/me (tulossa)
 
 
 Organisaatiot:
 
 POST /orgs
+
 GET /orgs
 
 
 Projektit:
 
 POST /projects
+
 GET /projects
 
 
 Tehtävät:
 
 POST /tasks
+
 GET /tasks
+
 PATCH /tasks/{id}
 
 
@@ -195,11 +205,17 @@ PATCH /tasks/{id}
 # Kehityssuunnitelma
 
 Vaihe 1 – Backend-perusta ✅
+
 Vaihe 2 – Tietokantaintegraatio ✅
+
 Vaihe 3 – Autentikointijärjestelmä ✅
+
 Vaihe 4 – Ydintoiminnot (organisaatiot, projektit, tehtävät)
+
 Vaihe 5 – Frontend-toteutus
+
 Vaihe 6 – Julkaisu pilveen
+
 Vaihe 7 – Tuotantovalmius
 
 ---
@@ -243,4 +259,5 @@ Tämä projekti toimii:
 # Kehittäjä
 
 Kehittäjä: Pekka Levo
+
 Status: Aktiivisessa kehityksessä
