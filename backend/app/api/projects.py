@@ -15,12 +15,9 @@ from app.crud.project import (
     update_project,
     update_task,
 )
-
-
 from app.db.session import get_db
 from app.models.user import User
 from app.schemas.project import ProjectCreate, ProjectResponse, ProjectUpdate, TaskCreate, TaskResponse, TaskUpdate
-
 
 router = APIRouter(tags=["projects"])
 
@@ -31,12 +28,12 @@ def _require_membership(db: Session, user_id: int, org_id: int):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Ei pääsyä organisaatioon")
     return membership
 
+
 def _require_admin(db: Session, user_id: int, org_id: int):
     membership = get_membership(db, user_id, org_id)
     if not membership or membership.role != "admin":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Vaatii admin-oikeudet")
     return membership
-
 
 
 @router.post("/orgs/{org_id}/projects", response_model=ProjectResponse, status_code=status.HTTP_201_CREATED)
@@ -59,18 +56,19 @@ def list_org_projects(
     _require_membership(db, current_user.id, org_id)
     return get_projects_by_org(db, org_id)
 
+
 @router.get("/projects/{project_id}", response_model=ProjectResponse)
 def get_org_project(
     project_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    
     project = get_project(db, project_id)
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
     _require_membership(db, current_user.id, project.organization_id)
     return project
+
 
 @router.patch("/projects/{project_id}", response_model=ProjectResponse)
 def patch_project(
@@ -79,7 +77,6 @@ def patch_project(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    
     project = get_project(db, project_id)
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
@@ -113,18 +110,6 @@ def list_project_tasks(
     _require_membership(db, current_user.id, project.organization_id)
     return get_tasks_by_project(db, project_id)
 
-@router.delete("/projects/{project_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_org_project(
-    project_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-):
-    project = get_project(db, project_id)
-    if not project:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
-    _require_admin(db, current_user.id, project.organization_id)
-    delete_project(db, project)
-
 
 @router.get("/tasks/{task_id}", response_model=TaskResponse)
 def get_single_task(
@@ -136,23 +121,10 @@ def get_single_task(
     if not task:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tehtävää ei löydy")
     project = get_project(db, task.project_id)
+    if not project:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
     _require_membership(db, current_user.id, project.organization_id)
     return task
-
-
-@router.delete("/tasks/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_project_task(
-    task_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-):
-    task = get_task(db, task_id)
-    if not task:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tehtävää ei löydy")
-    project = get_project(db, task.project_id)
-    _require_membership(db, current_user.id, project.organization_id)
-    delete_task(db, task)
-
 
 
 @router.patch("/tasks/{task_id}", response_model=TaskResponse)
@@ -166,8 +138,11 @@ def patch_task(
     if not task:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tehtävää ei löydy")
     project = get_project(db, task.project_id)
+    if not project:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
     _require_membership(db, current_user.id, project.organization_id)
     return update_task(db, task, task_update)
+
 
 @router.delete("/tasks/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_project_task(
@@ -179,9 +154,12 @@ def delete_project_task(
     if not task:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tehtävää ei löydy")
     project = get_project(db, task.project_id)
+    if not project:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
     _require_membership(db, current_user.id, project.organization_id)
     delete_task(db, task)
-    
+
+
 @router.delete("/projects/{project_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_org_project(
     project_id: int,
@@ -198,5 +176,3 @@ def delete_org_project(
             detail="Projektilla on tehtäviä — poista tehtävät ensin",
         )
     delete_project(db, project)
-
-

@@ -19,7 +19,7 @@ app.include_router(projects.router)
 # Simple app start timestamp to calculate uptime
 START_TIME = time.time()
 
-@app.get ("/")
+@app.get("/")
 def root():
     return {"message": "MyProject API is running"}
 
@@ -40,7 +40,7 @@ def version():
     Version endpoint
     if GIT_SHA is provided as an enviroment variable, it will be included.
     """
-    return{
+    return {
         "name": app.title,
         "version": app.version,
         "git-sha": os.getenv("GIT_SHA"),

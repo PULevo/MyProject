@@ -4,7 +4,6 @@ from app.models.project import Project, Task
 from app.schemas.project import ProjectCreate, ProjectUpdate, TaskCreate, TaskUpdate
 
 
-
 def create_project(db: Session, project_in: ProjectCreate, org_id: int, user_id: int) -> Project:
     project = Project(
         name=project_in.name,
@@ -24,6 +23,20 @@ def get_projects_by_org(db: Session, org_id: int) -> list[Project]:
 
 def get_project(db: Session, project_id: int) -> Project | None:
     return db.query(Project).filter(Project.id == project_id).first()
+
+
+def update_project(db: Session, project: Project, project_update: ProjectUpdate) -> Project:
+    update_data = project_update.model_dump(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(project, field, value)
+    db.commit()
+    db.refresh(project)
+    return project
+
+
+def delete_project(db: Session, project: Project) -> None:
+    db.delete(project)
+    db.commit()
 
 
 def create_task(db: Session, task_in: TaskCreate, project_id: int, user_id: int) -> Task:
@@ -47,15 +60,6 @@ def get_tasks_by_project(db: Session, project_id: int) -> list[Task]:
 def get_task(db: Session, task_id: int) -> Task | None:
     return db.query(Task).filter(Task.id == task_id).first()
 
-def delete_project(db: Session, project: Project) -> None:
-    db.delete(project)
-    db.commit()
-
-
-def delete_task(db: Session, task: Task) -> None:
-    db.delete(task)
-    db.commit()
-
 
 def update_task(db: Session, task: Task, task_update: TaskUpdate) -> Task:
     update_data = task_update.model_dump(exclude_unset=True)
@@ -65,18 +69,7 @@ def update_task(db: Session, task: Task, task_update: TaskUpdate) -> Task:
     db.refresh(task)
     return task
 
+
 def delete_task(db: Session, task: Task) -> None:
     db.delete(task)
     db.commit()
-
-def delete_project(db: Session, project: Project) -> None:
-    db.delete(project)
-    db.commit()
-
-def update_project(db: Session, project: Project, project_update: ProjectUpdate) -> Project:
-    update_data = project_update.model_dump(exclude_unset=True)
-    for field, value in update_data.items():
-        setattr(project, field, value)
-    db.commit()
-    db.refresh(project)
-    return project
