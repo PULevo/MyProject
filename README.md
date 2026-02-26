@@ -1,5 +1,7 @@
 # MyProject – Lightweight Team Task Management SaaS
 
+Finnish version of README-file: https://github.com/PULevo/MyProject/blob/main/README.fi.md
+
 A lightweight SaaS-style web application designed for small teams (1–10 users) to manage projects and tasks efficiently.
 
 This project is being built as a full-stack portfolio application using FastAPI, PostgreSQL, and React/Next.js. The goal is to demonstrate production-level backend architecture, authentication, database design, and scalable SaaS structure.
