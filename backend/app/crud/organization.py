@@ -23,3 +23,19 @@ def get_user_organizations(db: Session, user_id: int) -> list[Membership]:
         .options(joinedload(Membership.organization))
         .all()
     )
+
+def get_org_members(db: Session, org_id: int) -> list[Membership]:
+    return db.query(Membership).filter(Membership.organization_id == org_id).all()
+
+
+def add_member(db: Session, org_id: int, user_id: int, role: str) -> Membership:
+    membership = Membership(user_id=user_id, organization_id=org_id, role=role)
+    db.add(membership)
+    db.commit()
+    db.refresh(membership)
+    return membership
+
+
+def remove_member(db: Session, membership: Membership) -> None:
+    db.delete(membership)
+    db.commit()

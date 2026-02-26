@@ -21,3 +21,16 @@ class MembershipResponse(BaseModel):
     organization: OrganizationResponse
 
     model_config = {"from_attributes": True}
+
+class MemberAddRequest(BaseModel):
+    user_id: int
+    role: str = "member"
+
+
+class MemberResponse(BaseModel):
+    id: int
+    user_id: int
+    role: str
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
