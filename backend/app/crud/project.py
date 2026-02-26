@@ -47,6 +47,15 @@ def get_tasks_by_project(db: Session, project_id: int) -> list[Task]:
 def get_task(db: Session, task_id: int) -> Task | None:
     return db.query(Task).filter(Task.id == task_id).first()
 
+def delete_project(db: Session, project: Project) -> None:
+    db.delete(project)
+    db.commit()
+
+
+def delete_task(db: Session, task: Task) -> None:
+    db.delete(task)
+    db.commit()
+
 
 def update_task(db: Session, task: Task, task_update: TaskUpdate) -> Task:
     update_data = task_update.model_dump(exclude_unset=True)
