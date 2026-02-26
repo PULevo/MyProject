@@ -1,261 +1,319 @@
-# MyProject – Lightweight Team Task Management SaaS
+# 🚀 MyProject – Lightweight Team Task Management SaaS
 
-Finnish version of README-file: https://github.com/PULevo/MyProject/blob/main/README.fi.md
+![Backend](https://img.shields.io/badge/Backend-FastAPI-green)
+![Database](https://img.shields.io/badge/Database-PostgreSQL%2016-blue)
+![Auth](https://img.shields.io/badge/Auth-JWT-orange)
+![Tests](https://img.shields.io/badge/Tests-Pytest-success)
+![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen)
 
----
-
-A lightweight SaaS-style web application designed for small teams (1–10 users) to manage projects and tasks efficiently.
-
-This project is being built as a full-stack portfolio application using FastAPI, PostgreSQL, and React/Next.js. The goal is to demonstrate production-level backend architecture, authentication, database design, and scalable SaaS structure.
-
----
-
-# Current Status
-
-Backend foundation and authentication system are fully implemented.
-
-Implemented:
-
-- FastAPI backend initialized
-- Project structure organized using modular architecture
-- Virtual environment configured
-- Development server running successfully
-- API root, health, and version endpoints implemented
-- PostgreSQL database integration via SQLAlchemy
-- Alembic migration system configured
-- User model with email, hashed password, name, and timestamps
-- User registration: `POST /users/register`
-- JWT-based login: `POST /auth/login`
-- Secure password hashing with bcrypt
-
-In progress:
-
-- Protected endpoints (current user)
-- Organization management
-- Project management
-- Task management
-
-Planned:
-
-- Frontend (React / Next.js)
-- Cloud deployment
+Finnish version: [README.fi.md](./README.fi.md)
 
 ---
 
-# Project Vision
+A lightweight SaaS-style web application designed for **small teams (1–10 users)** to manage projects and tasks efficiently.
 
-The goal is to build a production-ready task management system for small teams.
+This project is built as a **full-stack portfolio application** using:
 
-Key goals:
+- FastAPI
+- PostgreSQL
+- React / Next.js (planned)
 
-- Clean and scalable backend architecture
-- Proper database modeling and migrations
-- Secure authentication and role-based access
-- SaaS-ready multi-organization structure
-- Production-quality codebase suitable for portfolio and real-world use
+The goal is to demonstrate:
 
----
-
-# MVP Scope (v1)
-
-## Authentication
-
-- User registration ✅
-- User login ✅
-- Secure password hashing (bcrypt) ✅
-- JWT-based authentication ✅
-- Current user endpoint (`GET /users/me`)
+- Production-level backend architecture  
+- Secure authentication  
+- Proper database design  
+- Scalable SaaS-ready structure  
 
 ---
 
-## Organization Management
+# 📌 Current Status
 
-- Create organization
-- Join organization
-- Role-based access:
-  - Admin
-  - Member
+Backend is **feature-complete for the MVP scope**.  
+
+All core functionality — authentication, organization management, project management, and task management — has been implemented and is covered by automated tests.
 
 ---
 
-## Project Management
+## ✅ Implemented
 
-- Create project
-- List organization projects
-
----
-
-## Task Management
-
-- Create task
-- Assign task to user
-- Task status:
-  - TODO
-  - DOING
-  - DONE
-- Optional due date
-
----
-
-## Views
-
-- My Tasks view
-- Project task list view
+- FastAPI backend with modular architecture  
+- PostgreSQL integration via SQLAlchemy  
+- Alembic migration system  
+- User model (email, hashed password, name, timestamps)  
+- User registration: `POST /users/register`  
+- JWT-based login: `POST /auth/login`  
+- Current user endpoint: `GET /users/me`  
+- Secure password hashing (bcrypt)  
+- Organization management (roles: admin / member)  
+- Project management per organization  
+- Task management per project  
+- Role-based access control  
+- Automated tests with pytest  
+- Docker Compose for local PostgreSQL  
 
 ---
 
-# Future Features (v2+)
+## 🚧 In Progress / Planned
 
-- Comments
-- File attachments
-- Email invitations
-- Notifications
-- Activity logs
-- Billing and subscriptions
-- Analytics dashboard
-- API integrations
-- AI-assisted features
+- Frontend (React / Next.js)  
+- Cloud deployment  
+- Production hardening  
 
 ---
 
-# Backend Architecture
+# 🎯 Project Vision
 
-Structure:
+Build a **production-ready task management system** for small teams.
+
+### Key Goals
+
+- Clean and scalable backend architecture  
+- Proper database modeling and migrations  
+- Secure authentication & RBAC  
+- SaaS-ready multi-organization structure  
+- Production-quality codebase suitable for portfolio and real-world use  
+
+---
+
+# 📦 MVP Scope (v1)
+
+## 🔐 Authentication ✅
+
+- User registration  
+- User login  
+- Secure password hashing (bcrypt)  
+- JWT-based authentication  
+- Current user endpoint (`GET /users/me`)  
+
+---
+
+## 🏢 Organization Management ✅
+
+- Create organization (creator becomes admin)  
+- List own organizations  
+- List organization members  
+- Add member (admin only)  
+- Remove member (admin only)  
+- Role-based access (admin / member)  
+
+---
+
+## 📁 Project Management ✅
+
+- Create project per organization (admin only)  
+- List organization projects (member+)  
+- Get single project (member+)  
+- Update project (admin only)  
+- Delete project (admin only, requires no tasks)  
+
+---
+
+## ✅ Task Management ✅
+
+- Create task (member+)  
+- List tasks (member+)  
+- Get single task (member+)  
+- Update task (member+)  
+- Delete task (creator or admin)  
+- Task statuses: `todo` / `doing` / `done`  
+- Optional user assignment  
+
+---
+
+## 🖥 Views (Frontend — Planned)
+
+- My Tasks view  
+- Project task list view  
+
+---
+
+# 🔮 Future Features (v2+)
+
+- Comments on tasks  
+- File attachments  
+- Email invitations  
+- Notifications  
+- Activity logs  
+- Billing and subscriptions  
+- Analytics dashboard  
+- API integrations  
+- AI-assisted features  
+
+---
+
+# 🏗 Backend Architecture
 
 ```
 backend/
-└── app/
-    ├── main.py
-    ├── core/
-    │   ├── config.py
-    │   └── security.py
-    ├── db/
-    │   ├── base.py
-    │   └── session.py
-    ├── models/
-    │   └── user.py
-    ├── schemas/
-    │   └── user.py
-    ├── crud/
-    │   └── user.py
-    └── api/
-        ├── users.py
-        └── auth.py
+├── alembic/
+│   ├── env.py
+│   └── script.py.mako
+├── alembic.ini
+├── app/
+│   ├── main.py
+│   ├── api/
+│   │   ├── auth.py
+│   │   ├── deps.py
+│   │   ├── organizations.py
+│   │   ├── projects.py
+│   │   └── users.py
+│   ├── core/
+│   │   ├── config.py
+│   │   └── security.py
+│   ├── crud/
+│   │   ├── organization.py
+│   │   ├── project.py
+│   │   └── user.py
+│   ├── db/
+│   │   ├── base.py
+│   │   └── session.py
+│   ├── models/
+│   │   ├── organization.py
+│   │   ├── project.py
+│   │   └── user.py
+│   └── schemas/
+│       ├── organization.py
+│       ├── project.py
+│       └── user.py
+└── tests/
+    ├── conftest.py
+    ├── test_auth.py
+    ├── test_organizations.py
+    └── test_projects.py
 ```
 
+### Architecture Principles
 
-Architecture principles:
-
-- Modular structure
-- Separation of concerns
-- Scalable design
-- Migration-based database management
-
----
-
-# Database Schema
-
-Implemented:
-
-- `users` — email, password_hash, name, created_at
-
-Planned:
-
-- `organizations`
-- `memberships` (user ↔ org with role)
-- `projects`
-- `tasks`
+- Modular structure with clear separation of concerns  
+- Router → Schema → CRUD → Model layering  
+- Dependency injection for DB sessions & authentication  
+- Migration-based database management via Alembic  
 
 ---
 
-# API Endpoints
+# 🗄 Database Schema
 
-Auth:
-
-POST /users/register ✅
-
-POST /auth/login ✅
-
-GET /users/me (planned)
-
-
-Organizations:
-
-POST /orgs
-GET /orgs
-
-
-Projects:
-
-POST /projects
-GET /projects
-
-
-Tasks:
-
-POST /tasks
-GET /tasks
-PATCH /tasks/{id}
-
+| Table | Columns |
+|-------|----------|
+| `users` | id, email, password_hash, name, created_at |
+| `organizations` | id, name, created_at |
+| `memberships` | id, user_id, organization_id, role, created_at |
+| `projects` | id, name, description, organization_id, created_by, created_at |
+| `tasks` | id, title, description, status, project_id, assigned_to, created_by, created_at, updated_at |
 
 ---
 
-# Development Roadmap
+# 📡 API Endpoints
 
-Phase 1 – Backend foundation ✅
+## System
 
-Phase 2 – Database integration ✅
-
-Phase 3 – Authentication system ✅
-
-Phase 4 – Core business logic (organizations, projects, tasks)
-
-Phase 5 – Frontend implementation
-
-Phase 6 – Cloud deployment
-
-Phase 7 – Production readiness
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/` | Root |
+| GET | `/health` | Health check |
+| GET | `/version` | Version info |
 
 ---
 
-# Tech Stack
+## Auth & Users
 
-Backend:
-
-- Python 3.12
-- FastAPI
-- SQLAlchemy
-- PostgreSQL
-- Alembic
-- passlib (bcrypt)
-- python-jose (JWT)
-
-Frontend (planned):
-
-- React or Next.js
-- TypeScript
-
-Infrastructure:
-
-- Docker
-- Render / Fly.io / Railway
-- Vercel
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| POST | `/users/register` | — | Register new user |
+| POST | `/auth/login` | — | Login, returns JWT |
+| GET | `/users/me` | ✅ | Get current user |
 
 ---
 
-# Purpose
+## Organizations
 
-This project is being developed as:
-
-- Portfolio project
-- Learning project
-- Demonstration of backend engineering skills
-- Potential SaaS product
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| POST | `/orgs` | ✅ | Create organization |
+| GET | `/orgs` | ✅ | List own organizations |
+| GET | `/orgs/{org_id}/members` | ✅ member | List members |
+| POST | `/orgs/{org_id}/members` | ✅ admin | Add member |
+| DELETE | `/orgs/{org_id}/members/{user_id}` | ✅ admin | Remove member |
 
 ---
 
-# Author
+## Projects
 
-Developer: Pekka Levo
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| POST | `/orgs/{org_id}/projects` | ✅ admin | Create project |
+| GET | `/orgs/{org_id}/projects` | ✅ member | List projects |
+| GET | `/projects/{project_id}` | ✅ member | Get project |
+| PATCH | `/projects/{project_id}` | ✅ admin | Update project |
+| DELETE | `/projects/{project_id}` | ✅ admin | Delete project |
 
-Status: Active development
+---
+
+## Tasks
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| POST | `/projects/{project_id}/tasks` | ✅ member | Create task |
+| GET | `/projects/{project_id}/tasks` | ✅ member | List tasks |
+| GET | `/tasks/{task_id}` | ✅ member | Get task |
+| PATCH | `/tasks/{task_id}` | ✅ member | Update task |
+| DELETE | `/tasks/{task_id}` | ✅ creator/admin | Delete task |
+
+---
+
+# 🗺 Development Roadmap
+
+| Phase | Description | Status |
+|-------|-------------|--------|
+| 1 | Backend foundation | ✅ Done |
+| 2 | Database integration | ✅ Done |
+| 3 | Authentication system | ✅ Done |
+| 4 | Core business logic | ✅ Done |
+| 5 | Frontend implementation | Planned |
+| 6 | Cloud deployment | Planned |
+| 7 | Production readiness | Planned |
+
+---
+
+# 🧰 Tech Stack
+
+## Backend
+
+- Python 3.12  
+- FastAPI  
+- SQLAlchemy  
+- PostgreSQL 16  
+- Alembic  
+- passlib (bcrypt)  
+- python-jose (JWT)  
+- pytest + httpx  
+
+## Frontend (Planned)
+
+- React or Next.js  
+- TypeScript  
+
+## Infrastructure
+
+- Docker / Docker Compose  
+- Render / Fly.io / Railway  
+- Vercel  
+
+---
+
+# 🎯 Purpose
+
+This project is developed as:
+
+- Portfolio project  
+- Learning project  
+- Demonstration of backend engineering skills  
+- Potential SaaS product foundation  
+
+---
+
+# 👤 Author
+
+Developer: **Pekka Levo**  
+Status: **Active development**
