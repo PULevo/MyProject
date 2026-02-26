@@ -6,12 +6,14 @@ from app.crud.organization import get_membership
 from app.crud.project import (
     create_project,
     create_task,
+    delete_task,
     get_project,
     get_projects_by_org,
     get_task,
     get_tasks_by_project,
     update_task,
 )
+
 from app.db.session import get_db
 from app.models.user import User
 from app.schemas.project import ProjectCreate, ProjectResponse, TaskCreate, TaskResponse, TaskUpdate
@@ -87,3 +89,16 @@ def patch_task(
     project = get_project(db, task.project_id)
     _require_membership(db, current_user.id, project.organization_id)
     return update_task(db, task, task_update)
+
+@router.delete("/tasks/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_project_task(
+    task_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    task = get_task(db, task_id)
+    if not task:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tehtävää ei löydy")
+    project = get_project(db, task.project_id)
+    _require_membership(db, current_user.id, project.organization_id)
+    delete_task(db, task)
