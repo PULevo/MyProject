@@ -31,6 +31,13 @@ def _require_membership(db: Session, user_id: int, org_id: int):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Ei pääsyä organisaatioon")
     return membership
 
+def _require_admin(db: Session, user_id: int, org_id: int):
+    membership = get_membership(db, user_id, org_id)
+    if not membership or membership.role != "admin":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Vaatii admin-oikeudet")
+    return membership
+
+
 
 @router.post("/orgs/{org_id}/projects", response_model=ProjectResponse, status_code=status.HTTP_201_CREATED)
 def create_org_project(
@@ -39,7 +46,7 @@ def create_org_project(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    _require_membership(db, current_user.id, org_id)
+    _require_admin(db, current_user.id, org_id)
     return create_project(db, project_in, org_id, current_user.id)
 
 
@@ -76,7 +83,7 @@ def patch_project(
     project = get_project(db, project_id)
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
-    _require_membership(db, current_user.id, project.organization_id)
+    _require_admin(db, current_user.id, project.organization_id)
     return update_project(db, project, project_update)
 
 
@@ -115,7 +122,7 @@ def delete_org_project(
     project = get_project(db, project_id)
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
-    _require_membership(db, current_user.id, project.organization_id)
+    _require_admin(db, current_user.id, project.organization_id)
     delete_project(db, project)
 
 
