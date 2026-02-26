@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from datetime import datetime, timezone
+from app.api import auth, organizations, users
+
 
 import os
 import time
@@ -13,6 +15,7 @@ app = FastAPI(
 
 app.include_router(users.router)
 app.include_router(auth.router)
+app.include_router(organizations.router)
 
 # Simple app start timestamp to calculate uptime
 START_TIME = time.time()
