@@ -49,6 +49,18 @@ def list_org_projects(
     _require_membership(db, current_user.id, org_id)
     return get_projects_by_org(db, org_id)
 
+@router.get("/projects/{project_id}", response_model=ProjectResponse)
+def get_org_project(
+    project_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    project = get_project(db, project_id)
+    if not project:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Projektia ei löydy")
+    _require_membership(db, current_user.id, project.organization_id)
+    return project
+
 
 @router.post("/projects/{project_id}/tasks", response_model=TaskResponse, status_code=status.HTTP_201_CREATED)
 def create_project_task(
