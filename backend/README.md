@@ -148,7 +148,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 ---
 
-# 🗄 Database Migrations
+# Database Migrations
 
 ### Apply migrations
 
