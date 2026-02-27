@@ -1,4 +1,4 @@
-# 🚀 MyProject – Kevyt tehtävienhallinta SaaS pienille tiimeille
+# MyProject – Kevyt tehtävienhallinta SaaS pienille tiimeille
 
 ![Backend](https://img.shields.io/badge/Backend-FastAPI-green)
 ![Tietokanta](https://img.shields.io/badge/Database-PostgreSQL%2016-blue)
@@ -27,7 +27,7 @@ Tavoitteena on toteuttaa:
 
 ---
 
-# 📌 Nykyinen tila
+# Nykyinen tila
 
 Backend on **MVP-laajuudeltaan valmis**.
 
@@ -35,7 +35,7 @@ Kaikki ydintoiminnot — autentikointi, organisaatiohallinta, projektinhallinta 
 
 ---
 
-## ✅ Toteutettu
+## Toteutettu
 
 - FastAPI-backend modulaarisella arkkitehtuurilla  
 - PostgreSQL-integraatio SQLAlchemyn kautta  
@@ -54,7 +54,7 @@ Kaikki ydintoiminnot — autentikointi, organisaatiohallinta, projektinhallinta 
 
 ---
 
-## 🚧 Työn alla / Suunnitteilla
+## Työn alla / Suunnitteilla
 
 - Frontend (React / Next.js)  
 - Pilvijulkaisu  
@@ -62,7 +62,7 @@ Kaikki ydintoiminnot — autentikointi, organisaatiohallinta, projektinhallinta 
 
 ---
 
-# 🎯 Projektin visio
+# Projektin visio
 
 Rakentaa **tuotantotasoinen tehtävienhallintajärjestelmä pienille tiimeille**.
 
@@ -76,9 +76,9 @@ Rakentaa **tuotantotasoinen tehtävienhallintajärjestelmä pienille tiimeille**
 
 ---
 
-# 📦 MVP-laajuus (v1)
+# MVP-laajuus (v1)
 
-## 🔐 Autentikointi ✅
+## Autentikointi 
 
 - Käyttäjän rekisteröinti  
 - Käyttäjän kirjautuminen  
@@ -88,7 +88,7 @@ Rakentaa **tuotantotasoinen tehtävienhallintajärjestelmä pienille tiimeille**
 
 ---
 
-## 🏢 Organisaatioiden hallinta ✅
+## Organisaatioiden hallinta 
 
 - Organisaation luonti (luoja saa admin-roolin)  
 - Omien organisaatioiden listaus  
@@ -99,7 +99,7 @@ Rakentaa **tuotantotasoinen tehtävienhallintajärjestelmä pienille tiimeille**
 
 ---
 
-## 📁 Projektien hallinta ✅
+## Projektien hallinta 
 
 - Projektin luonti organisaatioon (admin)  
 - Organisaation projektien listaus (member+)  
@@ -109,7 +109,7 @@ Rakentaa **tuotantotasoinen tehtävienhallintajärjestelmä pienille tiimeille**
 
 ---
 
-## ✅ Tehtävien hallinta ✅
+## Tehtävien hallinta 
 
 - Tehtävän luonti (member+)  
 - Tehtävien listaus (member+)  
@@ -121,14 +121,14 @@ Rakentaa **tuotantotasoinen tehtävienhallintajärjestelmä pienille tiimeille**
 
 ---
 
-## 🖥 Käyttönäkymät (Frontend — Suunnitteilla)
+## Käyttönäkymät (Frontend — Suunnitteilla)
 
 - Omat tehtävät -näkymä  
 - Projektikohtainen tehtävälista  
 
 ---
 
-# 🔮 Tulevat ominaisuudet (v2+)
+# Tulevat ominaisuudet (v2+)
 
 - Kommentit tehtäviin  
 - Tiedostoliitteet  
@@ -142,7 +142,7 @@ Rakentaa **tuotantotasoinen tehtävienhallintajärjestelmä pienille tiimeille**
 
 ---
 
-# 🏗 Backend-arkkitehtuuri
+# Backend-arkkitehtuuri
 
 ```
 backend/
@@ -192,7 +192,7 @@ backend/
 
 ---
 
-# 🗄 Tietokantarakenne
+# Tietokantarakenne
 
 | Taulu | Sarakkeet |
 |-------|-----------|
@@ -204,7 +204,7 @@ backend/
 
 ---
 
-# 📡 API-endpointit
+# API-endpointit
 
 ## Järjestelmä
 
@@ -262,7 +262,7 @@ backend/
 
 ---
 
-# 🗺 Kehityssuunnitelma
+# Kehityssuunnitelma
 
 | Vaihe | Kuvaus | Tila |
 |-------|--------|------|
@@ -276,7 +276,7 @@ backend/
 
 ---
 
-# 🧰 Teknologiat
+# Teknologiat
 
 ## Backend
 
@@ -302,7 +302,7 @@ backend/
 
 ---
 
-# 🎯 Projektin tarkoitus
+# Projektin tarkoitus
 
 Tämä projekti toimii:
 
@@ -313,7 +313,7 @@ Tämä projekti toimii:
 
 ---
 
-# 👤 Kehittäjä
+# Kehittäjä
 
 **Pekka Levo**  
 Status: **Aktiivisessa kehityksessä**
