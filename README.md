@@ -1,4 +1,4 @@
-# 🚀 MyProject – Lightweight Team Task Management SaaS
+# MyProject – Lightweight Team Task Management SaaS
 
 ![Backend](https://img.shields.io/badge/Backend-FastAPI-green)
 ![Database](https://img.shields.io/badge/Database-PostgreSQL%2016-blue)
@@ -27,7 +27,7 @@ The goal is to demonstrate:
 
 ---
 
-# 📌 Current Status
+# Current Status
 
 Backend is **feature-complete for the MVP scope**.  
 
@@ -35,7 +35,7 @@ All core functionality — authentication, organization management, project mana
 
 ---
 
-## ✅ Implemented
+## Implemented
 
 - FastAPI backend with modular architecture  
 - PostgreSQL integration via SQLAlchemy  
@@ -54,7 +54,7 @@ All core functionality — authentication, organization management, project mana
 
 ---
 
-## 🚧 In Progress / Planned
+## In Progress / Planned
 
 - Frontend (React / Next.js)  
 - Cloud deployment  
@@ -62,7 +62,7 @@ All core functionality — authentication, organization management, project mana
 
 ---
 
-# 🎯 Project Vision
+# Project Vision
 
 Build a **production-ready task management system** for small teams.
 
@@ -76,9 +76,9 @@ Build a **production-ready task management system** for small teams.
 
 ---
 
-# 📦 MVP Scope (v1)
+# MVP Scope (v1)
 
-## 🔐 Authentication ✅
+## Authentication 
 
 - User registration  
 - User login  
@@ -88,7 +88,7 @@ Build a **production-ready task management system** for small teams.
 
 ---
 
-## 🏢 Organization Management ✅
+## Organization Management
 
 - Create organization (creator becomes admin)  
 - List own organizations  
@@ -99,7 +99,7 @@ Build a **production-ready task management system** for small teams.
 
 ---
 
-## 📁 Project Management ✅
+##  Project Management 
 
 - Create project per organization (admin only)  
 - List organization projects (member+)  
@@ -109,7 +109,7 @@ Build a **production-ready task management system** for small teams.
 
 ---
 
-## ✅ Task Management ✅
+##  Task Management 
 
 - Create task (member+)  
 - List tasks (member+)  
@@ -121,14 +121,14 @@ Build a **production-ready task management system** for small teams.
 
 ---
 
-## 🖥 Views (Frontend — Planned)
+##  Views (Frontend — Planned)
 
 - My Tasks view  
 - Project task list view  
 
 ---
 
-# 🔮 Future Features (v2+)
+#  Future Features (v2+)
 
 - Comments on tasks  
 - File attachments  
@@ -142,7 +142,7 @@ Build a **production-ready task management system** for small teams.
 
 ---
 
-# 🏗 Backend Architecture
+#  Backend Architecture
 
 ```
 backend/
@@ -192,7 +192,7 @@ backend/
 
 ---
 
-# 🗄 Database Schema
+#  Database Schema
 
 | Table | Columns |
 |-------|----------|
@@ -204,7 +204,7 @@ backend/
 
 ---
 
-# 📡 API Endpoints
+#  API Endpoints
 
 ## System
 
@@ -262,7 +262,7 @@ backend/
 
 ---
 
-# 🗺 Development Roadmap
+# Development Roadmap
 
 | Phase | Description | Status |
 |-------|-------------|--------|
@@ -276,7 +276,7 @@ backend/
 
 ---
 
-# 🧰 Tech Stack
+# Tech Stack
 
 ## Backend
 
@@ -302,7 +302,7 @@ backend/
 
 ---
 
-# 🎯 Purpose
+# Purpose
 
 This project is developed as:
 
@@ -313,7 +313,7 @@ This project is developed as:
 
 ---
 
-# 👤 Author
+# Author
 
 Developer: **Pekka Levo**  
 Status: **Active development**
