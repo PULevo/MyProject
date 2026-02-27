@@ -1,4 +1,4 @@
-# 🚀 MyProject Backend API
+# MyProject Backend API
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
@@ -10,7 +10,7 @@ Backend API for **MyProject**, built with **FastAPI**, **SQLAlchemy**, and **Pos
 
 ---
 
-# 📦 Tech Stack
+# Tech Stack
 
 - Python 3.12  
 - FastAPI  
@@ -27,7 +27,7 @@ Backend API for **MyProject**, built with **FastAPI**, **SQLAlchemy**, and **Pos
 
 ---
 
-# 📁 Project Structure
+# Project Structure
 
 ```
 backend/
@@ -74,7 +74,7 @@ backend/
 
 ---
 
-# ✅ Prerequisites
+# Prerequisites
 
 - Python 3.12 or newer  
 - PostgreSQL (or Docker for local development)  
@@ -82,7 +82,7 @@ backend/
 
 ---
 
-# ⚙️ Local Development Setup
+# Local Development Setup
 
 ## 1️⃣ Start PostgreSQL (Docker)
 
@@ -115,7 +115,7 @@ pip install -r requirements.txt
 
 ---
 
-# 🔐 Environment Configuration
+# Environment Configuration
 
 Create a `.env` file (not committed to version control):
 
@@ -164,7 +164,7 @@ alembic revision --autogenerate -m "description"
 
 ---
 
-# ▶️ Run Development Server
+# Run Development Server
 
 ```bash
 uvicorn app.main:app --reload
@@ -178,7 +178,7 @@ http://127.0.0.1:8000/docs
 
 ---
 
-# 🧪 Testing
+# Testing
 
 Tests use SQLite in-memory database (no PostgreSQL required).
 
@@ -196,7 +196,7 @@ pytest -v
 
 ---
 
-# 📡 API Endpoints
+# API Endpoints
 
 ## System
 
@@ -254,7 +254,7 @@ pytest -v
 
 ---
 
-# 🛠 Useful Commands
+# Useful Commands
 
 ```bash
 # Activate virtual environment
@@ -275,7 +275,7 @@ pytest -v
 
 ---
 
-# 📊 Project Status
+# Project Status
 
 | Feature                                         | Status  |
 |-------------------------------------------------|----------|
@@ -294,7 +294,7 @@ pytest -v
 
 ---
 
-# 📌 Summary
+# Summary
 
 The backend is production-ready with:
 
