@@ -151,7 +151,7 @@ export async function deleteProject(projectId: number): Promise<void> {
 
 // ── Tasks ─────────────────────────────────────────────────────────────────────
 
-export type TaskStatus = "todo" | "doing" | "done"
+export type TaskStatus = "todo" | "in_progress" | "done"
 
 export interface Task {
   id: number

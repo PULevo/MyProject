@@ -31,25 +31,25 @@ import { cn } from "@/lib/utils"
 
 const COLUMNS: { id: TaskStatus; label: string }[] = [
   { id: "todo", label: "To Do" },
-  { id: "doing", label: "In Progress" },
+  { id: "in_progress", label: "In Progress" },
   { id: "done", label: "Done" },
 ]
 
 const NEXT_STATUS: Record<TaskStatus, TaskStatus | null> = {
-  todo: "doing",
-  doing: "done",
+  todo: "in_progress",
+  in_progress: "done",
   done: null,
 }
 
 const colColors: Record<TaskStatus, string> = {
   todo: "bg-slate-100 border-slate-200",
-  doing: "bg-blue-50 border-blue-200",
+  in_progress: "bg-blue-50 border-blue-200",
   done: "bg-green-50 border-green-200",
 }
 
 const badgeVariants: Record<TaskStatus, "secondary" | "default" | "success"> = {
   todo: "secondary",
-  doing: "default",
+  in_progress: "default",
   done: "success",
 }
 

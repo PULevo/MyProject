@@ -32,3 +32,4 @@ class Membership(Base):
     )
 
     organization: Mapped["Organization"] = relationship("Organization")
+    user: Mapped["User"] = relationship("User")

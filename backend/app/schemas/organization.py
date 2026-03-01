@@ -2,6 +2,8 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
+from app.schemas.user import UserResponse
+
 
 class OrganizationCreate(BaseModel):
     name: str
@@ -29,8 +31,8 @@ class MemberAddRequest(BaseModel):
 
 class MemberResponse(BaseModel):
     id: int
-    user_id: int
     role: str
+    user: UserResponse
     created_at: datetime
 
     model_config = {"from_attributes": True}
