@@ -24,6 +24,13 @@ def get_user_organizations(db: Session, user_id: int) -> list[Membership]:
         .all()
     )
 
+def get_membership(db: Session, user_id: int, org_id: int) -> Membership | None:
+    return db.query(Membership).filter(
+        Membership.user_id == user_id,
+        Membership.organization_id == org_id,
+    ).first()
+
+
 def get_org_members(db: Session, org_id: int) -> list[Membership]:
     return db.query(Membership).filter(Membership.organization_id == org_id).all()
 

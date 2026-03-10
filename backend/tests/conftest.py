@@ -45,7 +45,7 @@ def client(db):
 
 
 def register_and_login(client, email="testi@testi.fi", password="salasana123"):
-    client.post("/auth/register", json={"email": email, "password": password})
+    client.post("/users/register", json={"email": email, "password": password})
     resp = client.post("/auth/login", data={"username": email, "password": password})
     return resp.json()["access_token"]
 
