@@ -13,7 +13,7 @@ Finnish version: [README.fi.md](./README.fi.md)
 
 A lightweight SaaS-style web application for **small teams (1–10 users)** to manage projects and tasks without the overhead of enterprise tools.
 
-Built as a **full-stack portfolio project** by Pekka Levo. The goal was to build something genuinely usable — clean architecture, proper auth, and a UI that doesn't look like it was slapped together in an afternoon.
+Built as a **full-stack portfolio project**. The goal was to build something genuinely usable — clean architecture, proper auth, and a UI that doesn't look like it was slapped together in an afternoon.
 
 **Stack:**
 - FastAPI + PostgreSQL backend

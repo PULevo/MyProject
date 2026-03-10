@@ -13,7 +13,7 @@ English version: [README.md](./README.md)
 
 Kevyt SaaS-tyylinen web-sovellus **pienille tiimeille (1–10 henkilöä)**, joka on tehty projektien ja tehtävien hallintaan ilman raskaan toimiston tason järjestelmien monimutkaisuutta.
 
-Projekti on rakennettu **full stack -portfoliotyönä** Pekka Levon toimesta. Tavoitteena oli tehdä jotain aidosti käyttökelpoista — selkeä arkkitehtuuri, kunnollinen autentikointi ja käyttöliittymä, joka ei näytä nopealta kokeilulta.
+Projekti on rakennettu **full stack -portfoliotyönä**. Tavoitteena oli tehdä jotain aidosti käyttökelpoista — selkeä arkkitehtuuri, kunnollinen autentikointi ja käyttöliittymä, joka ei näytä nopealta kokeilulta.
 
 **Teknologiat:**
 - FastAPI + PostgreSQL backend
