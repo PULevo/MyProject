@@ -16,9 +16,29 @@ build/
 .env.*
 !.env.example
 
+# Node
+**/node_modules/
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Local env files
+.env.local
+.env.*.local
+
 # VS Code
 .vscode/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# SQLite test database
+backend/test.db
+
+# Claude AI project files
+.claude/
+
+# Misc (stray home dir shorthand)
+/~
