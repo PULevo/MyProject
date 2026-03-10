@@ -290,18 +290,12 @@ pytest -v
 | Project management                              | ✅ Done |
 | Task management                                 | ✅ Done |
 | Automated tests                                 | ✅ Done |
-| Frontend                                        | Planned |
+| Frontend                                        | ✅ Done |
 
 ---
 
 # Summary
 
-The backend is production-ready with:
+The backend is production-ready with JWT authentication, organization and project management, task management, database migrations, and an automated test suite.
 
-- JWT authentication
-- Organization & project management
-- Task management
-- Database migrations
-- Automated test suite
-
-Frontend implementation is planned next.
+The frontend is also complete — a Next.js 15 app with kanban boards, organization management, and a full auth flow. See [`frontend/README.md`](../frontend/README.md) for setup.

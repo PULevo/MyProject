@@ -1,6 +1,7 @@
-# MyProject – Kevyt tehtävienhallinta SaaS pienille tiimeille
+# MyProject – Kevyt tehtävienhallinta pienille tiimeille
 
 ![Backend](https://img.shields.io/badge/Backend-FastAPI-green)
+![Frontend](https://img.shields.io/badge/Frontend-Next.js%2015-black)
 ![Tietokanta](https://img.shields.io/badge/Database-PostgreSQL%2016-blue)
 ![Autentikointi](https://img.shields.io/badge/Auth-JWT-orange)
 ![Testit](https://img.shields.io/badge/Tests-Pytest-success)
@@ -10,259 +11,116 @@ English version: [README.md](./README.md)
 
 ---
 
-Kevyt SaaS-tyylinen web-sovellus, joka on suunniteltu **pienille tiimeille (1–10 käyttäjää)** projektien ja tehtävien hallintaan.
+Kevyt SaaS-tyylinen web-sovellus **pienille tiimeille (1–10 henkilöä)**, joka on tehty projektien ja tehtävien hallintaan ilman raskaan toimiston tason järjestelmien monimutkaisuutta.
 
-Projektia kehitetään **full stack -portfolioprojektina** käyttäen:
+Projekti on rakennettu **full stack -portfoliotyönä** Pekka Levon toimesta. Tavoitteena oli tehdä jotain aidosti käyttökelpoista — selkeä arkkitehtuuri, kunnollinen autentikointi ja käyttöliittymä, joka ei näytä nopealta kokeilulta.
 
-- FastAPI
-- PostgreSQL
-- React / Next.js (suunnitteilla)
-
-Tavoitteena on toteuttaa:
-
-- Tuotantotasoinen backend-arkkitehtuuri  
-- Turvallinen autentikointijärjestelmä  
-- Oikein mallinnettu tietokantarakenne  
-- Skaalautuva ja SaaS-valmis sovellus  
+**Teknologiat:**
+- FastAPI + PostgreSQL backend
+- Next.js 15 + TypeScript frontend
+- JWT-autentikointi
+- Roolipohjainen käyttöoikeus (admin / member)
 
 ---
 
-# Nykyinen tila
+## Mitä on toteutettu
 
-Backend on **MVP-laajuudeltaan valmis**.
+**Backend — valmis**
+- Käyttäjän rekisteröinti ja JWT-kirjautuminen
+- Organisaatiot admin/member-roolein
+- Projektit organisaatiokohtaisesti
+- Tehtävät projektikohtaisesti kanban-tiloilla (`todo` / `in_progress` / `done`)
+- Roolipohjainen käyttöoikeuksien hallinta kaikissa toiminnoissa
+- Automaattiset testit pytestillä
 
-Kaikki ydintoiminnot — autentikointi, organisaatiohallinta, projektinhallinta ja tehtävienhallinta — on toteutettu ja katettu automaattisilla testeillä.
-
----
-
-## Toteutettu
-
-- FastAPI-backend modulaarisella arkkitehtuurilla  
-- PostgreSQL-integraatio SQLAlchemyn kautta  
-- Alembic-migraatiojärjestelmä  
-- User-malli (sähköposti, salasanatiiviste, nimi, aikaleimat)  
-- Käyttäjän rekisteröinti: `POST /users/register`  
-- JWT-pohjainen kirjautuminen: `POST /auth/login`  
-- Kirjautuneen käyttäjän endpoint: `GET /users/me`  
-- Turvallinen salasanan hajautus (bcrypt)  
-- Organisaatioiden hallinta (admin / member -roolit)  
-- Projektien hallinta organisaatiokohtaisesti  
-- Tehtävien hallinta projektikohtaisesti  
-- Roolipohjainen käyttöoikeuksien hallinta  
-- Automaattiset testit pytestillä  
-- Docker Compose paikallista PostgreSQL-kehitystä varten  
+**Frontend — valmis**
+- Kirjautumis- ja rekisteröintisivut
+- Dashboard organisaatiolistauksella
+- Organisaatiosivu projektien ja jäsenten välilehdillä
+- Kanban-taulu tehtävienhallintaan (klikkaa muokataksesi, siirrä yhdellä klikkauksella)
 
 ---
 
-## Työn alla / Suunnitteilla
+## Mitä tulee seuraavaksi
 
-- Frontend (React / Next.js)  
-- Pilvijulkaisu  
-- Tuotantovalmiuden viimeistely  
-
----
-
-# Projektin visio
-
-Rakentaa **tuotantotasoinen tehtävienhallintajärjestelmä pienille tiimeille**.
-
-### Keskeiset tavoitteet
-
-- Selkeä ja skaalautuva backend-arkkitehtuuri  
-- Oikea tietokantasuunnittelu ja migraatiot  
-- Turvallinen autentikointi ja roolipohjainen käyttöoikeus  
-- SaaS-valmis moniorganisaatiorakenne  
-- Tuotantokelpoinen ja laajennettava koodipohja  
+- Pilvijulkaisu (Render / Railway + Vercel)
+- Tuotantovalmiuden viimeistely (rate limiting, virheenseuranta)
+- Sähköpostikutsut tiimin jäsenille
 
 ---
 
-# MVP-laajuus (v1)
-
-## Autentikointi 
-
-- Käyttäjän rekisteröinti  
-- Käyttäjän kirjautuminen  
-- Turvallinen salasanan hajautus (bcrypt)  
-- JWT-pohjainen autentikointi  
-- Kirjautuneen käyttäjän endpoint (`GET /users/me`)  
-
----
-
-## Organisaatioiden hallinta 
-
-- Organisaation luonti (luoja saa admin-roolin)  
-- Omien organisaatioiden listaus  
-- Organisaation jäsenten listaus  
-- Jäsenen lisääminen (admin)  
-- Jäsenen poistaminen (admin)  
-- Roolipohjainen käyttöoikeus (admin / member)  
-
----
-
-## Projektien hallinta 
-
-- Projektin luonti organisaatioon (admin)  
-- Organisaation projektien listaus (member+)  
-- Yksittäisen projektin haku (member+)  
-- Projektin muokkaus (admin)  
-- Projektin poistaminen (admin, ei tehtäviä)  
-
----
-
-## Tehtävien hallinta 
-
-- Tehtävän luonti (member+)  
-- Tehtävien listaus (member+)  
-- Yksittäisen tehtävän haku (member+)  
-- Tehtävän päivitys (member+)  
-- Tehtävän poisto (luoja tai admin)  
-- Tehtävän tilat: `todo` / `doing` / `done`  
-- Valinnainen käyttäjäkohtainen tehtävänanto  
-
----
-
-## Käyttönäkymät (Frontend — Suunnitteilla)
-
-- Omat tehtävät -näkymä  
-- Projektikohtainen tehtävälista  
-
----
-
-# Tulevat ominaisuudet (v2+)
-
-- Kommentit tehtäviin  
-- Tiedostoliitteet  
-- Sähköpostikutsut  
-- Ilmoitukset  
-- Aktiviteettiloki  
-- Maksulliset tilaukset  
-- Raportointi ja analytiikka  
-- API-integraatiot  
-- AI-avusteiset ominaisuudet  
-
----
-
-# Backend-arkkitehtuuri
+## Projektirakenne
 
 ```
-backend/
-├── alembic/
-│   ├── env.py
-│   └── script.py.mako
-├── alembic.ini
-├── app/
-│   ├── main.py
-│   ├── api/
-│   │   ├── auth.py
-│   │   ├── deps.py
-│   │   ├── organizations.py
-│   │   ├── projects.py
-│   │   └── users.py
-│   ├── core/
-│   │   ├── config.py
-│   │   └── security.py
-│   ├── crud/
-│   │   ├── organization.py
-│   │   ├── project.py
-│   │   └── user.py
-│   ├── db/
-│   │   ├── base.py
-│   │   └── session.py
-│   ├── models/
-│   │   ├── organization.py
-│   │   ├── project.py
-│   │   └── user.py
-│   └── schemas/
-│       ├── organization.py
-│       ├── project.py
-│       └── user.py
-└── tests/
-    ├── conftest.py
-    ├── test_auth.py
-    ├── test_organizations.py
-    └── test_projects.py
+MyProject/
+├── backend/          # FastAPI REST API
+│   ├── app/
+│   │   ├── api/      # Reittien käsittelijät
+│   │   ├── core/     # Konfiguraatio & tietoturva
+│   │   ├── crud/     # Tietokantaoperaatiot
+│   │   ├── db/       # Tietokantasessio
+│   │   ├── models/   # SQLAlchemy-mallit
+│   │   └── schemas/  # Pydantic-skeemat
+│   └── tests/
+├── frontend/         # Next.js 15 -sovellus
+│   ├── app/          # App Router -sivut
+│   ├── components/   # UI-komponentit
+│   ├── contexts/     # React-konteksti (autentikointi)
+│   └── lib/          # API-asiakasohjelma ja apufunktiot
+└── docker-compose.yml
 ```
 
-### Arkkitehtuurin periaatteet
-
-- Modulaarinen rakenne ja selkeä vastuualueiden erottelu  
-- Router → Schema → CRUD → Model -kerrosrakenne  
-- Riippuvuusinjektio tietokantasessioille ja autentikoinnille  
-- Migraatiopohjainen tietokannan hallinta Alembicin avulla  
+Kehitysympäristön asennusohjeet: [`backend/README.md`](./backend/README.md) ja [`frontend/README.md`](./frontend/README.md).
 
 ---
 
-# Tietokantarakenne
+## Teknologiat
 
-| Taulu | Sarakkeet |
-|-------|-----------|
+### Backend
+- Python 3.12 · FastAPI · Uvicorn
+- PostgreSQL 16 · SQLAlchemy · Alembic
+- passlib/bcrypt · python-jose (JWT)
+- pytest + httpx
+
+### Frontend
+- Next.js 15 · React 19 · TypeScript
+- Tailwind CSS v4 · Radix UI -primitiivit
+- Lucide-ikonit · Sonner-ilmoitukset
+- Bricolage Grotesque + Epilogue -fontit
+
+### Infrastruktuuri
+- Docker Compose (paikallinen PostgreSQL)
+- Render / Railway (suunniteltu backend-hosting)
+- Vercel (suunniteltu frontend-hosting)
+
+---
+
+## Tietokantarakenne
+
+| Taulu | Keskeiset sarakkeet |
+|-------|---------------------|
 | `users` | id, email, password_hash, name, created_at |
 | `organizations` | id, name, created_at |
-| `memberships` | id, user_id, organization_id, role, created_at |
-| `projects` | id, name, description, organization_id, created_by, created_at |
-| `tasks` | id, title, description, status, project_id, assigned_to, created_by, created_at, updated_at |
+| `memberships` | id, user_id, organization_id, role |
+| `projects` | id, name, description, organization_id, created_by |
+| `tasks` | id, title, description, status, project_id, created_by |
 
 ---
 
-# API-endpointit
+## API lyhyesti
 
-## Järjestelmä
+| Resurssi | Endpointit |
+|----------|------------|
+| Autentikointi | `POST /users/register` · `POST /auth/login` · `GET /users/me` |
+| Organisaatiot | `GET/POST /orgs` · `/orgs/{id}/members` |
+| Projektit | `GET/POST /orgs/{id}/projects` · `PATCH/DELETE /projects/{id}` |
+| Tehtävät | `GET/POST /projects/{id}/tasks` · `PATCH/DELETE /tasks/{id}` |
 
-| Metodi | Polku | Kuvaus |
-|--------|-------|--------|
-| GET | `/` | Juuri |
-| GET | `/health` | Tilantarkistus |
-| GET | `/version` | Versiotiedot |
-
----
-
-## Autentikointi ja käyttäjät
-
-| Metodi | Polku | Auth | Kuvaus |
-|--------|-------|------|--------|
-| POST | `/users/register` | — | Rekisteröidy |
-| POST | `/auth/login` | — | Kirjaudu sisään |
-| GET | `/users/me` | ✅ | Kirjautunut käyttäjä |
+Kaikki API-endpointit selityksineen löytyvät osoitteesta `http://localhost:8000/docs` kun sovellus on käynnissä paikallisesti.
 
 ---
 
-## Organisaatiot
-
-| Metodi | Polku | Auth | Kuvaus |
-|--------|-------|------|--------|
-| POST | `/orgs` | ✅ | Luo organisaatio |
-| GET | `/orgs` | ✅ | Listaa omat organisaatiot |
-| GET | `/orgs/{org_id}/members` | ✅ member | Listaa jäsenet |
-| POST | `/orgs/{org_id}/members` | ✅ admin | Lisää jäsen |
-| DELETE | `/orgs/{org_id}/members/{user_id}` | ✅ admin | Poista jäsen |
-
----
-
-## Projektit
-
-| Metodi | Polku | Auth | Kuvaus |
-|--------|-------|------|--------|
-| POST | `/orgs/{org_id}/projects` | ✅ admin | Luo projekti |
-| GET | `/orgs/{org_id}/projects` | ✅ member | Listaa projektit |
-| GET | `/projects/{project_id}` | ✅ member | Hae projekti |
-| PATCH | `/projects/{project_id}` | ✅ admin | Muokkaa projektia |
-| DELETE | `/projects/{project_id}` | ✅ admin | Poista projekti |
-
----
-
-## Tehtävät
-
-| Metodi | Polku | Auth | Kuvaus |
-|--------|-------|------|--------|
-| POST | `/projects/{project_id}/tasks` | ✅ member | Luo tehtävä |
-| GET | `/projects/{project_id}/tasks` | ✅ member | Listaa tehtävät |
-| GET | `/tasks/{task_id}` | ✅ member | Hae tehtävä |
-| PATCH | `/tasks/{task_id}` | ✅ member | Muokkaa tehtävää |
-| DELETE | `/tasks/{task_id}` | ✅ luoja/admin | Poista tehtävä |
-
----
-
-# Kehityssuunnitelma
+## Kehityssuunnitelma
 
 | Vaihe | Kuvaus | Tila |
 |-------|--------|------|
@@ -270,50 +128,25 @@ backend/
 | 2 | Tietokantaintegraatio | ✅ Valmis |
 | 3 | Autentikointijärjestelmä | ✅ Valmis |
 | 4 | Ydintoiminnot | ✅ Valmis |
-| 5 | Frontend | Suunnitteilla |
+| 5 | Frontend | ✅ Valmis |
 | 6 | Pilvijulkaisu | Suunnitteilla |
 | 7 | Tuotantovalmius | Suunnitteilla |
 
 ---
 
-# Teknologiat
+## Tulevat ominaisuudet (v2+)
 
-## Backend
-
-- Python 3.12  
-- FastAPI  
-- SQLAlchemy  
-- PostgreSQL 16  
-- Alembic  
-- passlib (bcrypt)  
-- python-jose (JWT)  
-- pytest + httpx  
-
-## Frontend (suunnitteilla)
-
-- React tai Next.js  
-- TypeScript  
-
-## Infra
-
-- Docker / Docker Compose  
-- Render / Fly.io / Railway  
-- Vercel  
+- Kommentit tehtäviin
+- Tiedostoliitteet
+- Sähköpostikutsut
+- Ilmoitukset
+- Aktiviteettiloki
+- Maksulliset tilaukset
+- Raportointi ja analytiikka
+- AI-avusteiset ominaisuudet
 
 ---
 
-# Projektin tarkoitus
+## Kehittäjä
 
-Tämä projekti toimii:
-
-- Portfolioprojektina  
-- Oppimisprojektina  
-- Backend-osaamisen demonstraationa  
-- Mahdollisena SaaS-tuotteen pohjana  
-
----
-
-# Kehittäjä
-
-**Pekka Levo**  
-Status: **Aktiivisessa kehityksessä**
+**Pekka Levo** — portfolioprojekti, aktiivisessa kehityksessä
