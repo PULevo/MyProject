@@ -41,4 +41,4 @@ backend/test.db
 .claude/
 
 # Misc (stray home dir shorthand)
-/~
+/~.worktrees/
