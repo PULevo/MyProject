@@ -14,7 +14,9 @@ import {
   type Membership,
   type Task,
   type TaskStatus,
+  type TaskPriority,
 } from "@/lib/api"
+import { PriorityBadge } from "@/components/ui/PriorityBadge"
 import { TaskDetailModal } from "@/components/TaskDetailModal"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -87,6 +89,8 @@ export default function ProjectPage() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [newTitle, setNewTitle] = useState("")
   const [newDesc, setNewDesc] = useState("")
+  const [newTaskPriority, setNewTaskPriority] = useState<TaskPriority>("medium")
+  const [newTaskDueDate, setNewTaskDueDate] = useState("")
   const [creating, setCreating] = useState(false)
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
@@ -114,11 +118,18 @@ export default function ProjectPage() {
     e.preventDefault()
     setCreating(true)
     try {
-      const task = await createTask(projectId, { title: newTitle.trim(), description: newDesc.trim() || undefined })
+      const task = await createTask(projectId, {
+        title: newTitle.trim(),
+        description: newDesc.trim() || undefined,
+        priority: newTaskPriority,
+        due_date: newTaskDueDate || undefined,
+      })
       setTasks((t) => [...t, task])
       setDialogOpen(false)
       setNewTitle("")
       setNewDesc("")
+      setNewTaskPriority("medium")
+      setNewTaskDueDate("")
       toast.success("Task created")
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Failed to create task")
@@ -209,7 +220,15 @@ export default function ProjectPage() {
             <Badge variant="secondary">{tasks.length}</Badge>
           </div>
 
-          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <Dialog open={dialogOpen} onOpenChange={(open) => {
+            setDialogOpen(open)
+            if (!open) {
+              setNewTitle("")
+              setNewDesc("")
+              setNewTaskPriority("medium")
+              setNewTaskDueDate("")
+            }
+          }}>
             <DialogTrigger asChild>
               <Button size="sm">
                 <Plus className="mr-1.5 h-3.5 w-3.5" />
@@ -239,6 +258,33 @@ export default function ProjectPage() {
                     placeholder="More details…"
                     value={newDesc}
                     onChange={(e) => setNewDesc(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label>Priority</Label>
+                  <div className="flex gap-2">
+                    {(["low", "medium", "high"] as TaskPriority[]).map((p) => (
+                      <button
+                        key={p}
+                        type="button"
+                        onClick={() => setNewTaskPriority(p)}
+                        className={cn(
+                          "flex-1 rounded-lg border px-2 py-1.5 transition-all duration-150",
+                          newTaskPriority === p ? "ring-2 ring-offset-1 ring-offset-surface ring-accent" : "opacity-50 hover:opacity-75",
+                        )}
+                      >
+                        <PriorityBadge priority={p} className="w-full justify-center" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="new-task-due">Due date (optional)</Label>
+                  <Input
+                    id="new-task-due"
+                    type="date"
+                    value={newTaskDueDate}
+                    onChange={(e) => setNewTaskDueDate(e.target.value)}
                   />
                 </div>
                 <div className="flex justify-end gap-2 pt-1">
@@ -314,6 +360,22 @@ export default function ProjectPage() {
                         <p className="text-sm font-medium text-text pr-6 leading-snug">
                           {task.title}
                         </p>
+                        {/* Priority + due date */}
+                        <div className="flex items-center gap-2 mt-2 flex-wrap">
+                          <PriorityBadge priority={task.priority} />
+                          {task.due_date && (
+                            <span
+                              className={cn(
+                                "text-[10px] font-medium",
+                                new Date(task.due_date) < new Date() && task.status !== "done"
+                                  ? "text-[#ef4444]"
+                                  : "text-muted",
+                              )}
+                            >
+                              {new Date(task.due_date).toLocaleDateString("fi-FI")}
+                            </span>
+                          )}
+                        </div>
                         {task.description && (
                           <p className="mt-2 text-xs text-muted line-clamp-2 leading-relaxed">
                             {task.description}
