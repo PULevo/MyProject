@@ -1,3 +1,5 @@
+from datetime import date as date_type
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -10,6 +12,7 @@ from app.crud.organization import (
     get_user_organizations,
     remove_member,
 )
+from app.crud.project import search_tasks
 from app.db.session import get_db
 from app.models.user import User
 from app.schemas.organization import (
@@ -19,6 +22,7 @@ from app.schemas.organization import (
     OrganizationCreate,
     OrganizationResponse,
 )
+from app.schemas.project import TaskResponse
 
 router = APIRouter(prefix="/orgs", tags=["organizations"])
 
@@ -83,3 +87,21 @@ def remove_org_member(
     if not membership:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Jäsenyyttä ei löydy")
     remove_member(db, membership)
+
+
+@router.get("/orgs/{org_id}/tasks/search", response_model=list[TaskResponse])
+def search_org_tasks(
+    org_id: int,
+    q: str | None = None,
+    priority: str | None = None,
+    assigned_to: int | None = None,
+    due_before: date_type | None = None,
+    due_after: date_type | None = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    membership = get_membership(db, current_user.id, org_id)
+    if not membership:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Ei pääsyä organisaatioon")
+    return search_tasks(db, org_id, q=q, priority=priority, assigned_to=assigned_to,
+                        due_before=due_before, due_after=due_after)
