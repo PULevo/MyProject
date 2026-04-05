@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { toast } from "sonner"
 import { useAuth } from "@/contexts/AuthContext"
-import { getOrgs, createOrg, type Membership } from "@/lib/api"
+import { getOrgs, createOrg, getMyTasks, type Membership, type Task } from "@/lib/api"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -17,12 +17,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { PriorityBadge } from "@/components/ui/PriorityBadge"
+import { cn } from "@/lib/utils"
 import { LogOut, Plus, Building2, ChevronRight, Layers } from "lucide-react"
 
 export default function DashboardPage() {
   const { user, loading, logout } = useAuth()
   const router = useRouter()
   const [memberships, setMemberships] = useState<Membership[]>([])
+  const [myTasks, setMyTasks] = useState<Task[]>([])
   const [fetching, setFetching] = useState(true)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [newOrgName, setNewOrgName] = useState("")
@@ -38,6 +41,7 @@ export default function DashboardPage() {
         .then(setMemberships)
         .catch(console.error)
         .finally(() => setFetching(false))
+      getMyTasks().then(setMyTasks).catch(() => {})
     }
   }, [user])
 
@@ -182,6 +186,38 @@ export default function DashboardPage() {
               </Link>
             ))}
           </div>
+        )}
+
+        {/* My Tasks */}
+        {myTasks.length > 0 && (
+          <section className="mt-10">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-muted mb-4 font-[family-name:var(--font-syne)]">
+              My Tasks
+            </h2>
+            <div className="space-y-2">
+              {myTasks.map((task) => (
+                <div
+                  key={task.id}
+                  className="flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-3"
+                >
+                  <PriorityBadge priority={task.priority} />
+                  <span className="flex-1 text-sm text-text truncate">{task.title}</span>
+                  {task.due_date && (
+                    <span
+                      className={cn(
+                        "text-xs shrink-0",
+                        new Date(task.due_date) < new Date() && task.status !== "done"
+                          ? "text-[#ef4444]"
+                          : "text-muted",
+                      )}
+                    >
+                      {new Date(task.due_date).toLocaleDateString("fi-FI")}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
         )}
       </main>
     </div>
