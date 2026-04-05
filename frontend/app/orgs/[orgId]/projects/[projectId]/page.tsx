@@ -18,6 +18,7 @@ import {
 } from "@/lib/api"
 import { PriorityBadge } from "@/components/ui/PriorityBadge"
 import { TaskDetailModal } from "@/components/TaskDetailModal"
+import { SearchModal } from "@/components/SearchModal"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -30,7 +31,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { ChevronLeft, Plus, LogOut, ArrowRight, Circle } from "lucide-react"
+import { ChevronLeft, Plus, LogOut, ArrowRight, Circle, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 function isOverdue(dueDate: string): boolean {
@@ -103,6 +104,7 @@ export default function ProjectPage() {
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [detailOpen, setDetailOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
 
   useEffect(() => {
     if (!loading && !user) router.replace("/")
@@ -204,6 +206,10 @@ export default function ProjectPage() {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-xs text-muted hidden sm:block">{user.name || user.email}</span>
+            <Button variant="ghost" size="sm" onClick={() => setSearchOpen(true)} className="text-muted">
+              <Search className="h-4 w-4 mr-1.5" />
+              Search
+            </Button>
             <button
               onClick={handleLogout}
               title="Sign out"
@@ -416,6 +422,9 @@ export default function ProjectPage() {
         onUpdate={(updated) => setTasks((ts) => ts.map((t) => (t.id === updated.id ? updated : t)))}
         onDelete={(id) => setTasks((ts) => ts.filter((t) => t.id !== id))}
       />
+
+      {/* Search modal */}
+      <SearchModal open={searchOpen} orgId={orgId} onClose={() => setSearchOpen(false)} />
     </div>
   )
 }
