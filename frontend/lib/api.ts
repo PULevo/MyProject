@@ -56,7 +56,8 @@ export async function login(email: string, password: string): Promise<LoginRespo
 export interface User {
   id: number
   email: string
-  name: string
+  name: string | null
+  created_at?: string
 }
 
 export async function register(email: string, password: string, name: string): Promise<User> {
