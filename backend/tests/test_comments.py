@@ -167,3 +167,17 @@ def test_search_outsider_forbidden(client):
     outsider = auth_headers(register_and_login(client, "out@x.fi", "salasana"))
     resp = client.get(f"/orgs/{org_id}/tasks/search?q=T", headers=outsider)
     assert resp.status_code == 403
+
+
+def test_non_member_cannot_list_comments(client):
+    ah, _, _, _, task_id = _setup(client)
+    outsider = auth_headers(register_and_login(client, "outsider1@x.fi", "salasana"))
+    resp = client.get(f"/tasks/{task_id}/comments", headers=outsider)
+    assert resp.status_code == 403
+
+
+def test_non_member_cannot_post_comment(client):
+    ah, _, _, _, task_id = _setup(client)
+    outsider = auth_headers(register_and_login(client, "outsider2@x.fi", "salasana"))
+    resp = client.post(f"/tasks/{task_id}/comments", json={"body": "Hei!"}, headers=outsider)
+    assert resp.status_code == 403
