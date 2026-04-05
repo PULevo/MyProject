@@ -22,8 +22,12 @@ def create_comment(db: Session, comment_in: CommentCreate, task_id: int, user_id
     )
     db.add(comment)
     db.commit()
-    db.refresh(comment)
-    return comment
+    return (
+        db.query(TaskComment)
+        .options(joinedload(TaskComment.user))
+        .filter(TaskComment.id == comment.id)
+        .first()
+    )
 
 
 def get_comment(db: Session, comment_id: int) -> TaskComment | None:
