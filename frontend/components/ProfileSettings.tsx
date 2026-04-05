@@ -15,7 +15,7 @@ interface ProfileSettingsProps {
 }
 
 export function ProfileSettings({ open, onClose }: ProfileSettingsProps) {
-  const { user } = useAuth()
+  const { user, refreshUser } = useAuth()
   const [name, setName] = useState(user?.name ?? "")
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -33,6 +33,7 @@ export function ProfileSettings({ open, onClose }: ProfileSettingsProps) {
       if (Object.keys(fields).length === 0) { onClose(); return }
       await updateProfile(fields)
       toast.success("Profile updated")
+      await refreshUser()
       setCurrentPassword("")
       setNewPassword("")
       onClose()
