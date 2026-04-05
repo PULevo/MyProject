@@ -4,6 +4,7 @@ from sqlalchemy import Date, DateTime, ForeignKey, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
+from app.models.user import User
 
 
 class Project(Base):
@@ -28,7 +29,7 @@ class Task(Base):
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     status: Mapped[str] = mapped_column(String(50), nullable=False, default="todo")
-    priority: Mapped[str] = mapped_column(String(10), nullable=False, default="medium")
+    priority: Mapped[str] = mapped_column(String(10), nullable=False, server_default="medium")
     due_date: Mapped[date | None] = mapped_column(Date, nullable=True)
     project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"), nullable=False, index=True)
     assigned_to: Mapped[int | None] = mapped_column(ForeignKey("users.id"), nullable=True, index=True)
@@ -59,4 +60,4 @@ class TaskComment(Base):
         nullable=False,
     )
 
-    user: Mapped["User"] = relationship("User")  # type: ignore[name-defined]
+    user: Mapped["User"] = relationship("User")
