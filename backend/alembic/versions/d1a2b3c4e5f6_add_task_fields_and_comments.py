@@ -21,7 +21,7 @@ def upgrade() -> None:
     op.add_column("tasks", sa.Column("due_date", sa.Date(), nullable=True))
     op.add_column(
         "tasks",
-        sa.Column("priority", sa.String(length=10), nullable=False, server_default="medium"),
+        sa.Column("priority", sa.String(length=10), nullable=False, server_default=sa.text("'medium'")),
     )
     op.create_table(
         "task_comments",
