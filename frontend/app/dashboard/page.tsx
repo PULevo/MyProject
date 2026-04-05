@@ -18,8 +18,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { PriorityBadge } from "@/components/ui/PriorityBadge"
+import { ProfileSettings } from "@/components/ProfileSettings"
 import { cn } from "@/lib/utils"
-import { LogOut, Plus, Building2, ChevronRight, Layers } from "lucide-react"
+import { LogOut, Plus, Building2, ChevronRight, Layers, Settings } from "lucide-react"
 
 export default function DashboardPage() {
   const { user, loading, logout } = useAuth()
@@ -30,6 +31,7 @@ export default function DashboardPage() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [newOrgName, setNewOrgName] = useState("")
   const [creating, setCreating] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
 
   useEffect(() => {
     if (!loading && !user) router.replace("/")
@@ -83,6 +85,13 @@ export default function DashboardPage() {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-xs text-muted hidden sm:block">{user.name || user.email}</span>
+            <button
+              onClick={() => setProfileOpen(true)}
+              title="Settings"
+              className="flex h-7 w-7 items-center justify-center rounded-lg text-muted hover:text-text hover:bg-surface-2 transition-colors"
+            >
+              <Settings className="h-3.5 w-3.5" />
+            </button>
             <button
               onClick={handleLogout}
               title="Sign out"
@@ -219,6 +228,8 @@ export default function DashboardPage() {
             </div>
           </section>
         )}
+
+        <ProfileSettings open={profileOpen} onClose={() => setProfileOpen(false)} />
       </main>
     </div>
   )
