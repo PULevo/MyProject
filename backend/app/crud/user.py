@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 
 from app.core.security import hash_password
 from app.models.user import User
-from app.schemas.user import UserCreate
+from app.schemas.user import UserCreate, UserUpdate
 
 
 def get_user_by_email(db: Session, email: str) -> User | None:
@@ -20,6 +20,16 @@ def create_user(db: Session, user_in: UserCreate) -> User:
         name=user_in.name,
     )
     db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
+
+
+def update_user(db: Session, user: User, update: UserUpdate) -> User:
+    if update.name is not None:
+        user.name = update.name
+    if update.new_password:
+        user.password_hash = hash_password(update.new_password)
     db.commit()
     db.refresh(user)
     return user
