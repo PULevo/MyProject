@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app.models.project import TaskComment
 from app.schemas.comment import CommentCreate
@@ -7,6 +7,7 @@ from app.schemas.comment import CommentCreate
 def get_comments_by_task(db: Session, task_id: int) -> list[TaskComment]:
     return (
         db.query(TaskComment)
+        .options(joinedload(TaskComment.user))
         .filter(TaskComment.task_id == task_id)
         .order_by(TaskComment.created_at.asc())
         .all()
