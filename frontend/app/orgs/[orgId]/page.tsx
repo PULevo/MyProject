@@ -27,7 +27,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { ChevronLeft, Plus, Trash2, FolderOpen, Users, ChevronRight, LogOut } from "lucide-react"
+import { ChevronLeft, Plus, Trash2, FolderOpen, Users, ChevronRight, LogOut, CalendarDays } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export default function OrgPage() {
@@ -46,7 +46,7 @@ export default function OrgPage() {
   const [newProjDesc, setNewProjDesc] = useState("")
   const [creating, setCreating] = useState(false)
 
-  const [activeTab, setActiveTab] = useState<"projects" | "members">("projects")
+  const [activeTab, setActiveTab] = useState<"projects" | "members" | "calendar">("projects")
   const [deletingId, setDeletingId] = useState<number | null>(null)
 
   useEffect(() => {
@@ -141,7 +141,7 @@ export default function OrgPage() {
       <main className="mx-auto max-w-4xl px-5 py-10">
         {/* Tabs */}
         <div className="mb-8 flex gap-1 border-b border-border">
-          {(["projects", "members"] as const).map((tab) => (
+          {(["projects", "members", "calendar"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -153,14 +153,16 @@ export default function OrgPage() {
                   : "border-transparent text-muted hover:text-text"
               )}
             >
-              {tab === "projects" ? <FolderOpen className="h-3.5 w-3.5" /> : <Users className="h-3.5 w-3.5" />}
+              {tab === "projects" ? <FolderOpen className="h-3.5 w-3.5" /> : tab === "members" ? <Users className="h-3.5 w-3.5" /> : <CalendarDays className="h-3.5 w-3.5" />}
               {tab}
-              <span className={cn(
-                "ml-0.5 rounded px-1.5 py-0.5 text-[10px]",
-                activeTab === tab ? "bg-accent/15 text-accent" : "bg-surface-2 text-muted"
-              )}>
-                {tab === "projects" ? projects.length : members.length}
-              </span>
+              {(tab === "projects" || tab === "members") && (
+                <span className={cn(
+                  "ml-0.5 rounded px-1.5 py-0.5 text-[10px]",
+                  activeTab === tab ? "bg-accent/15 text-accent" : "bg-surface-2 text-muted"
+                )}>
+                  {tab === "projects" ? projects.length : members.length}
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -283,6 +285,16 @@ export default function OrgPage() {
               </div>
             )}
           </>
+        )}
+
+        {/* Calendar tab */}
+        {activeTab === "calendar" && (
+          <div className="flex flex-col items-center gap-4 py-8">
+            <p className="text-muted text-sm">View all tasks with due dates on the calendar.</p>
+            <Link href={`/orgs/${orgId}/calendar`}>
+              <Button>Open Calendar</Button>
+            </Link>
+          </div>
         )}
 
         {/* Members tab */}
