@@ -340,6 +340,8 @@ export default function ProjectPage() {
         task={selectedTask}
         open={detailOpen}
         canDelete={selectedTask ? canDelete(selectedTask) : false}
+        currentUserId={user?.id ?? 0}
+        isAdmin={membership?.role === "admin"}
         onClose={() => { setDetailOpen(false); setSelectedTask(null) }}
         onUpdate={(updated) => setTasks((ts) => ts.map((t) => (t.id === updated.id ? updated : t)))}
         onDelete={(id) => setTasks((ts) => ts.filter((t) => t.id !== id))}
