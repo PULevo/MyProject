@@ -6,7 +6,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input"
 import { PriorityBadge } from "@/components/ui/PriorityBadge"
 import { Search } from "lucide-react"
-import { cn } from "@/lib/utils"
 
 interface SearchModalProps {
   open: boolean
@@ -18,21 +17,24 @@ export function SearchModal({ open, orgId, onClose }: SearchModalProps) {
   const [q, setQ] = useState("")
   const [results, setResults] = useState<Task[]>([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    if (!open) { setQ(""); setResults([]) }
+    if (!open) { setQ(""); setResults([]); setError(null) }
   }, [open])
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     if (!q.trim()) { setResults([]); return }
     debounceRef.current = setTimeout(async () => {
+      setError(null)
       setLoading(true)
       try {
         const data = await searchTasks(orgId, { q: q.trim() })
         setResults(data)
       } catch {
+        setError("Search failed. Please try again.")
         setResults([])
       } finally {
         setLoading(false)
@@ -59,6 +61,8 @@ export function SearchModal({ open, orgId, onClose }: SearchModalProps) {
         </div>
 
         {loading && <p className="text-xs text-muted py-4 text-center">Searching…</p>}
+
+        {error && <p className="text-xs text-[#ef4444] py-4 text-center">{error}</p>}
 
         {!loading && q && results.length === 0 && (
           <p className="text-xs text-muted py-4 text-center">No tasks found for "{q}"</p>
