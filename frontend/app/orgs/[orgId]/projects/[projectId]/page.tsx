@@ -114,7 +114,7 @@ export default function ProjectPage() {
     e.preventDefault()
     setCreating(true)
     try {
-      const task = await createTask(projectId, newTitle.trim(), newDesc.trim() || undefined)
+      const task = await createTask(projectId, { title: newTitle.trim(), description: newDesc.trim() || undefined })
       setTasks((t) => [...t, task])
       setDialogOpen(false)
       setNewTitle("")
