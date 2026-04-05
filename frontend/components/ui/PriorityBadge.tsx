@@ -26,6 +26,8 @@ export function PriorityBadge({ priority, className }: PriorityBadgeProps) {
   const { label, classes } = CONFIG[priority]
   return (
     <span
+      role="img"
+      aria-label={`Priority: ${label}`}
       className={cn(
         "inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide font-[family-name:var(--font-syne)]",
         classes,

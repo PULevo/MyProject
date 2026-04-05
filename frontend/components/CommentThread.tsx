@@ -21,7 +21,9 @@ export function CommentThread({ taskId, currentUserId, isAdmin }: CommentThreadP
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
-    getComments(taskId).then(setComments).catch(() => {})
+    getComments(taskId)
+      .then(setComments)
+      .catch((err) => toast.error(err instanceof Error ? err.message : "Failed to load comments"))
   }, [taskId])
 
   async function handleSubmit() {
@@ -72,6 +74,7 @@ export function CommentThread({ taskId, currentUserId, isAdmin }: CommentThreadP
               </div>
               {(c.user_id === currentUserId || isAdmin) && (
                 <button
+                  type="button"
                   onClick={() => handleDelete(c.id)}
                   className={cn(
                     "opacity-0 group-hover:opacity-100 transition-opacity",
