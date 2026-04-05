@@ -33,6 +33,14 @@ import {
 import { ChevronLeft, Plus, LogOut, ArrowRight, Circle } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+function isOverdue(dueDate: string): boolean {
+  const [y, m, d] = dueDate.split("-").map(Number)
+  const due = new Date(y, m - 1, d)  // local midnight
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  return due < today
+}
+
 const COLUMNS: {
   id: TaskStatus
   label: string
@@ -367,7 +375,7 @@ export default function ProjectPage() {
                             <span
                               className={cn(
                                 "text-[10px] font-medium",
-                                new Date(task.due_date) < new Date() && task.status !== "done"
+                                isOverdue(task.due_date) && task.status !== "done"
                                   ? "text-[#ef4444]"
                                   : "text-muted",
                               )}
