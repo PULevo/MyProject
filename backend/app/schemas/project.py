@@ -46,8 +46,8 @@ class TaskResponse(BaseModel):
     id: int
     title: str
     description: str | None
-    status: str
-    priority: str
+    status: Literal["todo", "in_progress", "done"]
+    priority: Literal["low", "medium", "high"]
     due_date: date | None
     project_id: int
     assigned_to: int | None
