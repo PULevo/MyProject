@@ -1,3 +1,5 @@
+from datetime import date
+
 from sqlalchemy.orm import Session
 
 from app.models.project import Project, Task
@@ -46,6 +48,8 @@ def create_task(db: Session, task_in: TaskCreate, project_id: int, user_id: int)
         project_id=project_id,
         assigned_to=task_in.assigned_to,
         created_by=user_id,
+        due_date=task_in.due_date,
+        priority=task_in.priority,
     )
     db.add(task)
     db.commit()
@@ -73,3 +77,39 @@ def update_task(db: Session, task: Task, task_update: TaskUpdate) -> Task:
 def delete_task(db: Session, task: Task) -> None:
     db.delete(task)
     db.commit()
+
+
+def search_tasks(
+    db: Session,
+    org_id: int,
+    q: str | None = None,
+    priority: str | None = None,
+    assigned_to: int | None = None,
+    due_before: date | None = None,
+    due_after: date | None = None,
+) -> list[Task]:
+    query = (
+        db.query(Task)
+        .join(Project, Task.project_id == Project.id)
+        .filter(Project.organization_id == org_id)
+    )
+    if q:
+        query = query.filter(Task.title.ilike(f"%{q}%"))
+    if priority:
+        query = query.filter(Task.priority == priority)
+    if assigned_to is not None:
+        query = query.filter(Task.assigned_to == assigned_to)
+    if due_before:
+        query = query.filter(Task.due_date <= due_before)
+    if due_after:
+        query = query.filter(Task.due_date >= due_after)
+    return query.order_by(Task.due_date.asc().nulls_last()).all()
+
+
+def get_tasks_assigned_to_user(db: Session, user_id: int) -> list[Task]:
+    return (
+        db.query(Task)
+        .filter(Task.assigned_to == user_id)
+        .order_by(Task.due_date.asc().nulls_last(), Task.created_at.desc())
+        .all()
+    )
