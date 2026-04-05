@@ -1,4 +1,5 @@
 from datetime import date as date_type
+from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
@@ -89,11 +90,11 @@ def remove_org_member(
     remove_member(db, membership)
 
 
-@router.get("/orgs/{org_id}/tasks/search", response_model=list[TaskResponse])
+@router.get("/{org_id}/tasks/search", response_model=list[TaskResponse])
 def search_org_tasks(
     org_id: int,
     q: str | None = None,
-    priority: str | None = None,
+    priority: Literal["low", "medium", "high"] | None = None,
     assigned_to: int | None = None,
     due_before: date_type | None = None,
     due_after: date_type | None = None,
