@@ -139,12 +139,12 @@ export function TaskDetailModal({
         }
       }}
     >
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
+      <DialogContent className="max-w-lg flex flex-col max-h-[90vh] overflow-hidden">
+        <DialogHeader className="shrink-0">
           <DialogTitle>Task details</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="flex-1 overflow-y-auto space-y-4 min-h-0 pr-1">
           {/* Title */}
           <div className="space-y-1.5">
             <Label htmlFor="detail-title">Title</Label>
@@ -231,53 +231,53 @@ export function TaskDetailModal({
               ))}
             </div>
           </div>
-        </div>
 
-        {/* Action buttons */}
-        <div className="mt-4 flex items-center justify-between">
-          {canDelete ? (
-            confirmDelete ? (
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted">Delete this task?</span>
-                <Button variant="destructive" size="sm" onClick={handleDelete} disabled={deleting}>
-                  {deleting ? "Deleting…" : "Yes, delete"}
+          {/* Action buttons */}
+          <div className="mt-4 flex items-center justify-between">
+            {canDelete ? (
+              confirmDelete ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted">Delete this task?</span>
+                  <Button variant="destructive" size="sm" onClick={handleDelete} disabled={deleting}>
+                    {deleting ? "Deleting…" : "Yes, delete"}
+                  </Button>
+                  <Button variant="ghost" size="sm" onClick={() => setConfirmDelete(false)}>
+                    Cancel
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setConfirmDelete(true)}
+                  className="text-muted hover:text-destructive hover:bg-destructive/10"
+                >
+                  <Trash2 className="h-3.5 w-3.5 mr-1.5" />
+                  Delete
                 </Button>
-                <Button variant="ghost" size="sm" onClick={() => setConfirmDelete(false)}>
-                  Cancel
-                </Button>
-              </div>
+              )
             ) : (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setConfirmDelete(true)}
-                className="text-muted hover:text-destructive hover:bg-destructive/10"
-              >
-                <Trash2 className="h-3.5 w-3.5 mr-1.5" />
-                Delete
+              <span />
+            )}
+
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" onClick={onClose}>
+                Cancel
               </Button>
-            )
-          ) : (
-            <span />
+              <Button size="sm" onClick={handleSave} disabled={saving || !isDirty || !title.trim()}>
+                <Save className="h-3.5 w-3.5 mr-1.5" />
+                {saving ? "Saving…" : "Save"}
+              </Button>
+            </div>
+          </div>
+
+          {/* Comments */}
+          {task && (
+            <div className="mt-6 pt-6 border-t border-border">
+              <CommentThread taskId={task.id} currentUserId={currentUserId} isAdmin={isAdmin} />
+            </div>
           )}
-
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button size="sm" onClick={handleSave} disabled={saving || !isDirty || !title.trim()}>
-              <Save className="h-3.5 w-3.5 mr-1.5" />
-              {saving ? "Saving…" : "Save"}
-            </Button>
-          </div>
         </div>
-
-        {/* Comments */}
-        {task && (
-          <div className="mt-6 pt-6 border-t border-border">
-            <CommentThread taskId={task.id} currentUserId={currentUserId} isAdmin={isAdmin} />
-          </div>
-        )}
       </DialogContent>
     </Dialog>
   )
