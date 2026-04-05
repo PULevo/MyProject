@@ -22,6 +22,14 @@ import { ProfileSettings } from "@/components/ProfileSettings"
 import { cn } from "@/lib/utils"
 import { LogOut, Plus, Building2, ChevronRight, Layers, Settings } from "lucide-react"
 
+function isOverdue(dueDate: string): boolean {
+  const [y, m, d] = dueDate.split("-").map(Number)
+  const due = new Date(y, m - 1, d)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  return due < today
+}
+
 export default function DashboardPage() {
   const { user, loading, logout } = useAuth()
   const router = useRouter()
@@ -215,7 +223,7 @@ export default function DashboardPage() {
                     <span
                       className={cn(
                         "text-xs shrink-0",
-                        new Date(task.due_date) < new Date() && task.status !== "done"
+                        isOverdue(task.due_date) && task.status !== "done"
                           ? "text-[#ef4444]"
                           : "text-muted",
                       )}

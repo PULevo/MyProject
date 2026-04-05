@@ -55,7 +55,7 @@ export default function CalendarPage() {
         setMembership(m)
         if (!m) { router.replace("/dashboard"); return }
         const taskArrays = await Promise.all(projects.map((p) => getTasks(p.id)))
-        setAllTasks(taskArrays.flat().filter((t) => t.due_date !== null))
+        setAllTasks(taskArrays.flat().filter((t) => t.due_date !== null && t.status !== "done"))
       } catch {
         toast.error("Failed to load calendar data")
       } finally {
@@ -150,7 +150,7 @@ export default function CalendarPage() {
 
             return (
               <div
-                key={idx}
+                key={`${year}-${month}-${idx}`}
                 className={cn(
                   "min-h-[100px] bg-surface p-2 flex flex-col gap-1",
                   day === null && "bg-surface/40",

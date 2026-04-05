@@ -28,9 +28,9 @@ class UserUpdate(BaseModel):
     current_password: str | None = None
     new_password: str | None = None
 
-    @field_validator("current_password", "new_password")
+    @field_validator("name", "current_password", "new_password")
     @classmethod
     def not_empty(cls, v: str | None) -> str | None:
-        if v is not None and v == "":
-            raise ValueError("Salasana ei voi olla tyhjä")
+        if v is not None and v.strip() == "":
+            raise ValueError("must not be empty")
         return v
