@@ -1,7 +1,7 @@
 // frontend/components/TaskDetailModal.tsx
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { toast } from "sonner"
 import { updateTask, deleteTask, type Task, type TaskStatus, type TaskPriority } from "@/lib/api"
 import {
@@ -77,14 +77,16 @@ export function TaskDetailModal({
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
-  // Sync local state when task changes
-  if (task && !saving && !deleting) {
-    if (title !== task.title) setTitle(task.title)
-    if (description !== (task.description ?? "")) setDescription(task.description ?? "")
-    if (status !== task.status) setStatus(task.status)
-    if (priority !== task.priority) setPriority(task.priority)
-    if (dueDate !== (task.due_date ?? "")) setDueDate(task.due_date ?? "")
-  }
+  // Sync local state when a different task is opened
+  useEffect(() => {
+    if (task) {
+      setTitle(task.title)
+      setDescription(task.description ?? "")
+      setStatus(task.status)
+      setPriority(task.priority)
+      setDueDate(task.due_date ?? "")
+    }
+  }, [task?.id])
 
   async function handleSave() {
     if (!task) return
